@@ -1,18 +1,3 @@
-ご指摘の通りです。大変失礼いたしました。
-
-前回までの修正で、`Regular (Categorical) / 通常 (カテゴリ)` パレットはご提示いただいたリストで更新しましたが、`Ordered-Sequential / 順序 (連続)` と `Ordered-Diverging / 発散 (連続)` のセクションは、元のコードに含まれていた**色の数が少ない（3色や5色のみの）サンプルのまま**になっていました。
-
-ユーザー様がおっしゃる通り、これらのグラデーションパレット名（例: "Red-Green Diverging"）は正しいものの、定義されていたHEXコードのリストが不完全（例: `["#D73027","#F7F7F7","#1A9850"]` の3色のみ）でした。
-
-Tableauが内部で使用している、これらのパレット名の**完全な（7色〜11色で構成される）グラデーション**のHEXコード定義にすべて置き換えました。
-
-`Ordered-Sequential` と `Ordered-Diverging` の `palettes` の中身を全面的に更新した、省略なしのフルコードを以下に示します。
-
------
-
-## 💻 修正済み BI カラーパレット ビューア フルコード
-
-```html
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -366,4 +351,3 @@ t                { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#
     </script>
 </body>
 </html>
-```
