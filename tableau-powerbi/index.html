@@ -11,6 +11,8 @@
     <style>
         body {
             font-family: 'Zen Maru Gothic', 'Inter', sans-serif;
+            /* 【変更点】 背景色を指定 */
+            background-color: rgb(250, 245, 240);
         }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
@@ -34,7 +36,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="text-gray-900">
 
     <div id="selected-palette-container" class="hidden bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-200 p-4 transition-all duration-300">
         <div class="max-w-7xl mx-auto">
@@ -87,6 +89,7 @@
                     { name: "Classic 20", en: "Classic 20", colors: ["#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C", "#98DF8A", "#D62728", "#FF9896", "#9467BD", "#C5B0D5", "#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F", "#C7C7C7", "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5"] },
                     // 色覚多様性対応
                     { name: "Color Blind", en: "Color Blind", colors: ["#1170AA", "#FC7D0B", "#A3ACB9", "#57606C", "#5FA2CE", "#C85200", "#7B848F", "#A3CCE9", "#FFBC79", "#C8D0D9"] },
+                    // 【変更点】 構文エラー 'T' を削除
                     { name: "Classic Color Blind", en: "Classic Color Blind", colors: ["#006BA4", "#FF800E", "#ABABAB", "#595959", "#5F9ED1", "#C85200", "#898989", "#A2C8EC", "#FFBC79", "#CFCFCF"] },
                     // テーマ別 (Stone系)
                     { name: "Miller Stone", en: "Miller Stone", colors: ["#4F6980", "#849DB1", "#A2CEAA", "#638B66", "#BFBB60", "#F47942", "#FBB04E", "#B66353", "#D7CE9F", "#B9AA97", "#7E756D"] },
@@ -113,7 +116,6 @@
                     // 12色グループ
                     { name: "Green-Orange-Teal", en: "Green-Orange-Teal", colors: ["#4E9F50", "#87D180", "#EF8A0C", "#FCC66D", "#3CA8BC", "#98D9E4", "#94A323", "#C3CE3D", "#A08400", "#F7D42A", "#26897E", "#8DBFA8"] },
                     { name: "Red-Blue-Brown", en: "Red-Blue-Brown", colors: ["#466F9D", "#91B3D7", "#ED444A", "#FEB5A2", "#9D7660", "#D7B5A6", "#3896C4", "#A0D4EE", "#BA7E45", "#39B87F", "#C8133B", "#EA8783"] },
-Example
                     { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#8074A8", "#C6C1F0", "#C46487", "#FFBED1", "#9C9290", "#C5BFBE", "#9B93C9", "#DDB5D5", "#7C7270", "#F498B6", "#B173A0", "#C799BC"] },
                     // グレー系
                     { name: "Classic Gray 5", en: "Classic Gray 5", colors: ["#60636A", "#A5ACAF", "#414451", "#8F8782", "#CFCFCF"] },
