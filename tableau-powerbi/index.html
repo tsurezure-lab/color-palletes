@@ -19,7 +19,15 @@
         #selected-palette-container {
             position: sticky; top: 0; z-index: 50; margin-bottom: 1.5rem;
         }
-        .color-chip { min-width: 20px; height: 100%; }
+        
+        /* 【変更点】 min-width: 20px を削除し、flex-grow: 1 を追加 */
+        /* これにより、チップがコンテナ幅一杯に均等に広がるようになり、20色パレットも収まる */
+        .color-chip {
+            flex-grow: 1;
+            flex-basis: 0;
+            height: 100%;
+        }
+        
         #selected-hex-codes { overflow: hidden; }
         .gradient-preview {
             background: linear-gradient(to right, var(--colors));
@@ -64,7 +72,7 @@
 
     <script>
         // --- データ定義（日本語＋英語名）---
-
+        // (tableauDefaultPalettes と powerBiPalettes の定義は変更なし)
         const tableauDefaultPalettes = [
             {
                 type: "Regular (Categorical) / 通常 (カテゴリ)",
@@ -254,7 +262,10 @@
                   </div>`;
 
             const colorStr = JSON.stringify(palette.colors).replace(/"/g, "'");
-            const selectCall = `selectPalette('${palette.name}', ${colorStr}, '${source}', '${palette.en}')`;
+            
+            // 【変更点】 palette.diverging (ブール値) を selectPalette に渡す
+            const isDivergingFlag = palette.diverging || false;
+            const selectCall = `selectPalette('${palette.name}', ${colorStr}, '${source}', '${palette.en}', ${isDivergingFlag})`; // 最後の引数を追加
 
             return `
                 <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out overflow-hidden cursor-pointer" onclick="${selectCall}">
@@ -286,16 +297,21 @@
         }
 
         // --- 選択・コピー ---
-        function selectPalette(name, colors, source, en) {
+        
+        // 【変更点】 5番目の引数として isDiverging (ブール値) を受け取る
+        function selectPalette(name, colors, source, en, isDiverging) {
             document.getElementById('selected-name').textContent = `${name} (${en} - ${source})`;
-            const isDiverging = colors.length <= 3 && colors.some(c => c === '#F7F7F7' || c === '#FFFFFF' || c === '#000000');
-            const preview = isDiverging
-                ? `<div class="h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner" style="background: linear-gradient(to right, ${colors.join(', ')};"></div>`
+            
+            // 【変更点】 以前の不正確な isDiverging 判定ロジックを削除
+            
+            const preview = isDiverging // 引数で受け取った isDiverging を使用
+                // 【変更点】 閉じ括弧 ')' が抜けていたのを修正
+                ? `<div class="h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner" style="background: linear-gradient(to right, ${colors.join(', ')});`
                 : `<div class="flex h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner">
                     ${colors.map(c => {
                         const border = ['#FFFFFF','#F7F7F7','#F5F5F5','#FFF7BC'].includes(c.toUpperCase()) ? 'border border-gray-200' : '';
                         return `<div class="color-chip relative group ${border}" style="background:${c};" title="${c}">
-                            <span class="hidden sm:block absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">${c}</span>
+                            <span class="hidden sm:block absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowMrap">${c}</span>
                         </div>`;
                     }).join('')}
                   </div>`;
