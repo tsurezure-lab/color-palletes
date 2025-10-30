@@ -71,7 +71,7 @@
 
     <script>
         // --- データ定義（日本語＋英語名）---
-        // (tableauDefaultPalettes と powerBiPalettes の定義は変更なし)
+        
         const tableauDefaultPalettes = [
             {
                 type: "Regular (Categorical) / 通常 (カテゴリ)",
@@ -122,7 +122,8 @@
                     { name: "Green-Gold", en: "Green-Gold", colors: ["#F0F9E8","#CCEBC5","#A8DDB5","#7BDEB6","#4DAB80","#2A9A5E","#006D36"] },
                     // 赤・オレンジ系 (暖色系)
                     { name: "Red", en: "Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D","#A50F15","#67000D"] },
-                    { name:KA: "Classic Red", en: "Classic Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#A50000"] },
+                    // 【変更点】 'name:KA:' という構文エラーを 'name:' に修正
+                    { name: "Classic Red", en: "Classic Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#A50000"] },
                     { name: "Red-Gold", en: "Red-Gold", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D"] },
                     { name: "Orange", en: "Orange", colors: ["#FEF0D9","#FDCC8A","#FC8D59","#E34A33","#B30000"] },
                     { name: "Classic Orange", en: "Classic Orange", colors: ["#FEF0D9","#FDCC8A","#FC8D59","#E34A33","#B30000"] },
@@ -300,8 +301,8 @@
             document.getElementById('selected-name').textContent = `${name} (${en} - ${source})`;
             
             const preview = isDiverging
-                // 【変更点】 ')' が抜けていたのを修正しました。
-                ? `<div class="h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner" style="background: linear-gradient(to right, ${colors.join(', ')});`
+                // 【変更点】 欠落していた `);"></div>` を追加し、テンプレートリテラルを正しく閉じる
+                ? `<div class="h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner" style="background: linear-gradient(to right, ${colors.join(', ')});"></div>`
                 : `<div class="flex h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner">
                     ${colors.map(c => {
                         const border = ['#FFFFFF','#F7F7F7','#F5F5F5','#FFF7BC'].includes(c.toUpperCase()) ? 'border border-gray-200' : '';
@@ -345,6 +346,7 @@
             }
         }
 
+        // window.onload で実行することで、HTMLの読み込み完了後にスクリプトが動くようにする
         window.onload = renderPalettes;
     </script>
 </body>
