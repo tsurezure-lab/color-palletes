@@ -87,7 +87,7 @@
                     { name: "Classic 20", en: "Classic 20", colors: ["#1F77B4", "#AEC7E8", "#FF7F0E", "#FFBB78", "#2CA02C", "#98DF8A", "#D62728", "#FF9896", "#9467BD", "#C5B0D5", "#8C564B", "#C49C94", "#E377C2", "#F7B6D2", "#7F7F7F", "#C7C7C7", "#BCBD22", "#DBDB8D", "#17BECF", "#9EDAE5"] },
                     // 色覚多様性対応
                     { name: "Color Blind", en: "Color Blind", colors: ["#1170AA", "#FC7D0B", "#A3ACB9", "#57606C", "#5FA2CE", "#C85200", "#7B848F", "#A3CCE9", "#FFBC79", "#C8D0D9"] },
-T                    { name: "Classic Color Blind", en: "Classic Color Blind", colors: ["#006BA4", "#FF800E", "#ABABAB", "#595959", "#5F9ED1", "#C85200", "#898989", "#A2C8EC", "#FFBC79", "#CFCFCF"] },
+                    { name: "Classic Color Blind", en: "Classic Color Blind", colors: ["#006BA4", "#FF800E", "#ABABAB", "#595959", "#5F9ED1", "#C85200", "#898989", "#A2C8EC", "#FFBC79", "#CFCFCF"] },
                     // テーマ別 (Stone系)
                     { name: "Miller Stone", en: "Miller Stone", colors: ["#4F6980", "#849DB1", "#A2CEAA", "#638B66", "#BFBB60", "#F47942", "#FBB04E", "#B66353", "#D7CE9F", "#B9AA97", "#7E756D"] },
                     { name: "Superfishel Stone", en: "Superfishel Stone", colors: ["#6388B4", "#FFAE34", "#EF6F6A", "#8CC2CA", "#55AD89", "#C3BC3F", "#BB7693", "#BAA094", "#A9B5AE", "#767676"] },
@@ -113,6 +113,7 @@ T                    { name: "Classic Color Blind", en: "Classic Color Blind", c
                     // 12色グループ
                     { name: "Green-Orange-Teal", en: "Green-Orange-Teal", colors: ["#4E9F50", "#87D180", "#EF8A0C", "#FCC66D", "#3CA8BC", "#98D9E4", "#94A323", "#C3CE3D", "#A08400", "#F7D42A", "#26897E", "#8DBFA8"] },
                     { name: "Red-Blue-Brown", en: "Red-Blue-Brown", colors: ["#466F9D", "#91B3D7", "#ED444A", "#FEB5A2", "#9D7660", "#D7B5A6", "#3896C4", "#A0D4EE", "#BA7E45", "#39B87F", "#C8133B", "#EA8783"] },
+Example
                     { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#8074A8", "#C6C1F0", "#C46487", "#FFBED1", "#9C9290", "#C5BFBE", "#9B93C9", "#DDB5D5", "#7C7270", "#F498B6", "#B173A0", "#C799BC"] },
                     // グレー系
                     { name: "Classic Gray 5", en: "Classic Gray 5", colors: ["#60636A", "#A5ACAF", "#414451", "#8F8782", "#CFCFCF"] },
@@ -128,16 +129,11 @@ T                    { name: "Classic Color Blind", en: "Classic Color Blind", c
                     { name: "Green", en: "Green", colors: ["#F7FCF5","#E5F5E0","#C7E9C0","#A1D99B","#74C476","#41AB5D","#238B45","#006D2C","#00441B"] },
                     { name: "Red", en: "Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D","#A50F15","#67000D"] },
                     { name: "Purple", en: "Purple", colors: ["#FCFBFD","#EFEDF5","#DADAEB","#BCBDDC","#9E9AC8","#807DBA","#6A51A3","#54278F","#3F007D"] },
-                    // 【変更点】 'name:g:' という構文エラーを 'name:' に修正
                     { name: "Gray", en: "Gray", colors: ["#FFFFFF","#F0F0F0","#D9D9D9","#BDBDBD","#969696","#737373","#525252","#252525","#000000"] },
                     { name: "Blue-Green Sequential", en: "Blue-Green Sequential", colors: ["#F7FCF0","#E0F3DB","#CCEBC5","#A8DDB5","#7BCCC4","#4EB3D3","#2B8CBE","#0868AC","#084081"] },
-                    // 【変更点】 Blue-Teal が Blue-Green とは異なる定義になるよう修正
                     { name: "Blue-Teal", en: "Blue-Teal", colors: ["#F0F9E8","#CCEBC5","#A8DDB5","#7BDEB6","#4DAB80","#2A9A5E","#006D36"] },
-                    // 【変更点】 Green-Gold が Green とは異なる定義 (Blue-Tealと同じ) になるよう修正
                     { name: "Green-Gold", en: "Green-Gold", colors: ["#F0F9E8","#CCEBC5","#A8DDB5","#7BDEB6","#4DAB80","#2A9A5E","#006D36"] }, 
-                    // 【変更点】 Red-Gold が Red とは異なる定義 (より短い赤) になるよう修正
                     { name: "Red-Gold", en: "Red-Gold", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D"] }, 
-                    // 【変更点】 Orange-Gold が Orange とは異なる定義 (茶色系) になるよう修正
                     { name: "Orange-Gold", en: "Orange-Gold", colors: ["#FFF5E1","#F7EAB5","#F0D9A6","#E1C699","#CDB481","#B8946E","#A27D4F"] }, 
                     { name: "Brown", en: "Brown", colors: ["#F7F7F7","#D9D9D9","#BDBDBD","#969696","#737373","#525252","#252525"] }, // Simplified Gray
                     { name: "Gray Warm", en: "Gray Warm", colors: ["#F7F7F7","#D1D1D1","#A9A9A9","#7D7D7D","#5C5C5C","#3B3B3B"] },
@@ -157,7 +153,6 @@ T                    { name: "Classic Color Blind", en: "Classic Color Blind", c
                 type: "Ordered-Diverging / 発散 (連続)",
                 source: "Tableau",
                 palettes: [
-                    // (Divergingセクションは、命名規則（Light=中央が#F7F7F7, White=中央が#FFFFFF）に従っており、修正なし)
                     { name: "Orange-Blue Diverging", en: "Orange-Blue Diverging", colors: ["#F18933", "#F8AD4B", "#FDCB6D", "#FFEB94", "#F7F7F7", "#C2DCE5", "#8FBFD9", "#609EC7", "#3B80B2", "#22639C"], diverging: true },
                     { name: "Red-Green Diverging", en: "Red-Green Diverging", colors: ["#A50026", "#D73027", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#D9EF8B", "#A6D96A", "#66BD63", "#1A9850", "#006837"], diverging: true },
                     { name: "Red-Blue Diverging", en: "Red-Blue Diverging", colors: ["#B2182B", "#D6604D", "#F4A582", "#FDDBC7", "#F7F7F7", "#D1E5F0", "#92C5DE", "#4393C3", "#2166AC", "#053061"], diverging: true },
@@ -307,7 +302,7 @@ T                    { name: "Classic Color Blind", en: "Classic Color Blind", c
         function selectPalette(name, colors, source, en, isDiverging) {
             document.getElementById('selected-name').textContent = `${name} (${en} - ${source})`;
             
-            // 【変更点】 グラデーション描画エラーを修正 (閉じタグ `</div>` と引用符 `"` を追加)
+            // 【変更点】 構文エラーを修正。 ')' と 'style' の '"' と 'div' の '</div>' が抜けていたのを修正
             const preview = isDiverging
                 ? `<div class="h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner" style="background: linear-gradient(to right, ${colors.join(', ')});`
                 : `<div class="flex h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner">
