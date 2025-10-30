@@ -20,8 +20,7 @@
             position: sticky; top: 0; z-index: 50; margin-bottom: 1.5rem;
         }
         
-        /* 【変更点】 min-width: 20px を削除し、flex-grow: 1 を追加 */
-        /* これにより、チップがコンテナ幅一杯に均等に広がるようになり、20色パレットも収まる */
+        /* 20色パレット対応: flex-growで幅を自動調整 */
         .color-chip {
             flex-grow: 1;
             flex-basis: 0;
@@ -123,7 +122,7 @@
                     { name: "Green-Gold", en: "Green-Gold", colors: ["#F0F9E8","#CCEBC5","#A8DDB5","#7BDEB6","#4DAB80","#2A9A5E","#006D36"] },
                     // 赤・オレンジ系 (暖色系)
                     { name: "Red", en: "Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D","#A50F15","#67000D"] },
-                    { name: "Classic Red", en: "Classic Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#A50000"] },
+                    { name:KA: "Classic Red", en: "Classic Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#A50000"] },
                     { name: "Red-Gold", en: "Red-Gold", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D"] },
                     { name: "Orange", en: "Orange", colors: ["#FEF0D9","#FDCC8A","#FC8D59","#E34A33","#B30000"] },
                     { name: "Classic Orange", en: "Classic Orange", colors: ["#FEF0D9","#FDCC8A","#FC8D59","#E34A33","#B30000"] },
@@ -263,9 +262,8 @@
 
             const colorStr = JSON.stringify(palette.colors).replace(/"/g, "'");
             
-            // 【変更点】 palette.diverging (ブール値) を selectPalette に渡す
             const isDivergingFlag = palette.diverging || false;
-            const selectCall = `selectPalette('${palette.name}', ${colorStr}, '${source}', '${palette.en}', ${isDivergingFlag})`; // 最後の引数を追加
+            const selectCall = `selectPalette('${palette.name}', ${colorStr}, '${source}', '${palette.en}', ${isDivergingFlag})`; // 5番目の引数として isDiverging を渡す
 
             return `
                 <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out overflow-hidden cursor-pointer" onclick="${selectCall}">
@@ -298,20 +296,17 @@
 
         // --- 選択・コピー ---
         
-        // 【変更点】 5番目の引数として isDiverging (ブール値) を受け取る
         function selectPalette(name, colors, source, en, isDiverging) {
             document.getElementById('selected-name').textContent = `${name} (${en} - ${source})`;
             
-            // 【変更点】 以前の不正確な isDiverging 判定ロジックを削除
-            
-            const preview = isDiverging // 引数で受け取った isDiverging を使用
-                // 【変更点】 閉じ括弧 ')' が抜けていたのを修正
+            const preview = isDiverging
+                // 【変更点】 ')' が抜けていたのを修正しました。
                 ? `<div class="h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner" style="background: linear-gradient(to right, ${colors.join(', ')});`
                 : `<div class="flex h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner">
                     ${colors.map(c => {
                         const border = ['#FFFFFF','#F7F7F7','#F5F5F5','#FFF7BC'].includes(c.toUpperCase()) ? 'border border-gray-200' : '';
                         return `<div class="color-chip relative group ${border}" style="background:${c};" title="${c}">
-                            <span class="hidden sm:block absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowMrap">${c}</span>
+                            <span class="hidden sm:block absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">${c}</span>
                         </div>`;
                     }).join('')}
                   </div>`;
