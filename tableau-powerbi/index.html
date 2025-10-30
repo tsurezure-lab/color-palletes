@@ -4,386 +4,322 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BI カラーパレット ビューア (Tableau & Power BI)</title>
-    <!-- Tailwind CSS CDNの読み込み -->
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Interフォントの読み込み -->
+    <!-- Zen Maru Gothic (Google Fonts) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Zen Maru Gothic', 'Inter', sans-serif;
         }
-        /* スクロールバーのスタイル（オプション） */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-        /* 選択されたパレットのコンテナを画面上部に固定 */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         #selected-palette-container {
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            /* スクロールコンテンツが隠れないように少し余白を確保 */
-            margin-bottom: 1.5rem; 
+            position: sticky; top: 0; z-index: 50; margin-bottom: 1.5rem;
         }
-        /* 各カラーチップのスタイル */
-        .color-chip {
-            min-width: 20px;
+        .color-chip { min-width: 20px; height: 100%; }
+        #selected-hex-codes { overflow: hidden; }
+        .gradient-preview {
+            background: linear-gradient(to right, var(--colors));
             height: 100%;
-        }
-        /* テキストエリアの見た目を調整し、スクロールを隠す */
-        #selected-hex-codes {
-            overflow: hidden;
         }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-900">
 
-    <!-- 選択されたパレットの固定表示エリア (Sticky Header) -->
+    <!-- 固定ヘッダー -->
     <div id="selected-palette-container" class="hidden bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-200 p-4 transition-all duration-300">
         <div class="max-w-7xl mx-auto">
             <div class="flex justify-between items-center mb-3">
                 <h3 id="selected-name" class="text-xl font-semibold text-gray-800">選択されたパレット</h3>
-                <button onclick="closeSelected()" aria-label="選択したパレットを閉じる" class="text-gray-500 hover:text-gray-800 p-1 rounded-full hover:bg-gray-100 transition">
+                <button onclick="closeSelected()" aria-label="閉じる" class="text-gray-500 hover:text-gray-800 p-1 rounded-full hover:bg-gray-100 transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
             </div>
-
-            <!-- カラープレビュー -->
-            <div id="selected-colors" class="flex h-12 w-full rounded-md overflow-hidden border border-gray-200 mb-3 shadow-inner">
-            </div>
-
+            <div id="selected-colors" class="flex h-12 w-full rounded-md overflow-hidden border border-gray-200 mb-3 shadow-inner"></div>
             <div class="flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-                <!-- HEXコード表示エリア -->
-                <textarea id="selected-hex-codes" readonly class="flex-1 w-full sm:w-auto bg-gray-100 border border-gray-300 rounded-md p-2 text-sm text-gray-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" rows="2" placeholder="ここにHEXコードが表示されます"></textarea>
-                
-                <!-- コピーボタン -->
-                <button id="copy-button" onclick="copyToClipboard()" class="mt-2 sm:mt-0 w-full sm:w-auto bg-blue-600 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition duration-150 ease-in-out shadow-md whitespace-nowrap">
+                <textarea id="selected-hex-codes" readonly class="flex-1 w-full sm:w-auto bg-gray-100 border border-gray-300 rounded-md p-2 text-sm text-gray-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" rows="2"></textarea>
+                <button id="copy-button" onclick="copyToClipboard()" class="mt-2 sm:mt-0 w-full sm:w-auto bg-blue-600 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-700 transition shadow-md whitespace-nowrap">
                     HEXコードをコピー
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- メインコンテンツエリア -->
+    <!-- メインコンテンツ -->
     <div class="max-w-7xl mx-auto p-4 sm:p-6 lg:p-8">
-        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 mb-2">BI カラーパレット ビューア</h1>
-        <p class="text-gray-500 mb-10">TableauとPower BIの標準カラーパレットをプレビューし、HEXコードをワンクリックでコピーできます。</p>
+        <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900 mb-2">
+            BI カラーパレット ビューア<br>
+            <span class="text-xl font-medium text-blue-600">BI Color Palette Viewer</span>
+        </h1>
+        <p class="text-gray-500 mb-10">
+            TableauとPower BIの標準カラーパレットをプレビューし、HEXコードをワンクリックでコピーできます。<br>
+            <span class="text-sm">Preview default color palettes and copy HEX codes instantly.</span>
+        </p>
 
-        <!-- パレット表示コンテナ -->
-        <div id="palette-main-container" class="space-y-12">
-            <!-- JavaScriptによってコンテンツがここに挿入されます -->
-        </div>
+        <div id="palette-main-container" class="space-y-12"></div>
     </div>
 
     <script>
-        // --- データ定義 ---
+        // --- データ定義（日本語＋英語名）---
 
-        // 1. Tableau 2025 デフォルトパレット
         const tableauDefaultPalettes = [
             {
-                type: "Regular (Categorical)",
+                type: "Regular (Categorical) / 通常 (カテゴリ)",
                 source: "Tableau",
                 palettes: [
-                    { name: "Tableau 10", colors: ["#4E79A7", "#F28E2B", "#E15759", "#76B7B2", "#59A14F", "#EDC948", "#B07AA1", "#FF9DA7", "#9C755F", "#BAB0AC"] },
-                    { name: "Tableau 20", colors: ["#4E79A7", "#A0CBE8", "#F28E2B", "#FFBE7D", "#59A14F", "#8CD17D", "#B6992D", "#F1CE63", "#499894", "#86BCB6", "#E15759", "#FF9D9A", "#79706E", "#BAB0AC", "#D37295", "#FABFD2", "#B07AA1", "#D4A6C8", "#9D7660", "#D7B5A6"] },
-                    { name: "Color Blind", colors: ["#1170AA", "#FC7D0B", "#A3ACB9", "#57606C", "#5FA2CE", "#C85200", "#7B848F", "#A3CCE9", "#FFBC79", "#C8D0D9"] },
-                    { name: "Seattle Grays", colors: ["#808080", "#C0C0C0", "#E0E0E0", "#F5F5F5", "#FFFFFF"] },
-                    { name: "Traffic", colors: ["#009292", "#E69F00", "#000000", "#CC0000"] },
-                    { name: "Miller Stone", colors: ["#DB9E68", "#849DB1", "#A2CEAA", "#4F6980", "#F47942", "#86BCB6", "#B9AA97", "#8175AA", "#BFBB60", "#E07972", "#1F968B", "#B66353", "#D7CE9F", "#7E756D", "#C399B9", "#638B66"] },
-                    { name: "Jewel Bright", colors: ["#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#FF00FF", "#00FFFF"] },
-                    { name: "Summer", colors: ["#00FF00", "#FFFF00", "#FF0000", "#FFA500", "#800080"] },
-                    { name: "Winter", colors: ["#0000FF", "#00FFFF", "#FFFFFF", "#C0C0C0", "#808080"] },
-                    { name: "Green-Orange-Teal", colors: ["#1F968B", "#F28E2B", "#00BF7D"] },
-                    { name: "Red-Blue-Brown", colors: ["#E31A1C", "#1F78B4", "#6A3D9A"] },
-                    { name: "Purple-Pink-Gray", colors: ["#6A1A4A", "#FB9A99", "#BDBDBD"] },
-                    { name: "Hue Circle", colors: ["#8CD0E2", "#8FD3D8", "#8ED2CB", "#8ED5C0", "#97D1AC", "#AAD09A", "#CDD790", "#E9DC8E", "#FBDA8E", "#F7C588"] },
-                    { name: "Classic 10", colors: ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728", "#9467BD", "#8C564B", "#E377C2", "#7F7F7F", "#BCBD22", "#17BECF"] },
-                    { name: "Classic Gray 5", colors: ["#000000", "#808080", "#C0C0C0", "#D3D3D3", "#FFFFFF"] },
-                    { name: "Classic Color Blind", colors: ["#1170AA", "#DC4405", "#E73F5C", "#2E91E5", "#55A868", "#F1C232", "#CDA429", "#B9AA98", "#705770", "#466B9F"] },
-                    { name: "Classic Traffic Light", colors: ["#008000", "#FFFF00", "#FF0000"] },
-                    { name: "Classic Purple-Gray 6", colors: ["#6A1A4A", "#BDBDBD"] },
-                    { name: "Classic Green-Orange 6", colors: ["#1B9E77", "#D95F02"] },
-                    { name: "Classic Blue-Red 6", colors: ["#7570B3", "#E7298A"] },
-                    { name: "Classic Cyclic", colors: ["#E7298A", "#E6AB02", "#A6761D", "#666666", "#1B9E77", "#D95F02", "#7570B3"] }
+                    { name: "Tableau 10", en: "Tableau 10", colors: ["#4E79A7","#F28E2B","#E15759","#76B7B2","#59A14F","#EDC948","#B07AA1","#FF9DA7","#9C755F","#BAB0AC"] },
+                    { name: "Tableau 20", en: "Tableau 20", colors: ["#4E79A7","#A0CBE8","#F28E2B","#FFBE7D","#59A14F","#8CD17D","#B6992D","#F1CE63","#499894","#86BCB6","#E15759","#FF9D9A","#79706E","#BAB0AC","#D37295","#FABFD2","#B07AA1","#D4A6C8","#9D7660","#D7B5A6"] },
+                    { name: "Classic 20", en: "Classic 20", colors: ["#1F77B4","#FF7F0E","#2CA02C","#D62728","#9467BD","#8C564B","#E377C2","#7F7F7F","#BCBD22","#17BECF","#AEC7E8","#FFBB78","#98DF8A","#FF9896","#C5B0D5","#C49C94","#F7B6D2","#C7C7C7","#DBDB8D","#9EDAE5"] },
+                    { name: "Color Blind", en: "Color Blind", colors: ["#1170AA","#FC7D0B","#A3ACB9","#57606C","#5FA2CE","#C85200","#7B848F","#A3CCE9","#FFBC79","#C8D0D9"] },
+                    { name: "Seattle Grays", en: "Seattle Grays", colors: ["#808080","#C0C0C0","#E0E0E0","#F5F5F5","#FFFFFF"] },
+                    { name: "Traffic", en: "Traffic", colors: ["#009292","#E69F00","#000000","#CC0000"] },
+                    { name: "Miller Stone", en: "Miller Stone", colors: ["#DB9E68","#849DB1","#A2CEAA","#4F6980","#F47942","#86BCB6","#B9AA97","#8175AA","#BFBB60","#E07972","#1F968B","#B66353","#D7CE9F","#7E756D","#C399B9","#638B66"] },
+                    { name: "Jewel Bright", en: "Jewel Bright", colors: ["#FF0000","#00FF00","#0000FF","#FFFF00","#FF00FF","#00FFFF"] },
+                    { name: "Summer", en: "Summer", colors: ["#00FF00","#FFFF00","#FF0000","#FFA500","#800080"] },
+                    { name: "Winter", en: "Winter", colors: ["#0000FF","#00FFFF","#FFFFFF","#C0C0C0","#808080"] },
+                    { name: "Green-Orange-Teal", en: "Green-Orange-Teal", colors: ["#1F968B","#F28E2B","#00BF7D"] },
+                    { name: "Red-Blue-Brown", en: "Red-Blue-Brown", colors: ["#E31A1C","#1F78B4","#6A3D9A"] },
+                    { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#6A1A4A","#FB9A99","#BDBDBD"] },
+                    { name: "Hue Circle", en: "Hue Circle", colors: generateHueCircle(10) },
+                    { name: "Classic 10", en: "Classic 10", colors: ["#1F77B4","#FF7F0E","#2CA02C","#D62728","#9467BD","#8C564B","#E377C2","#7F7F7F","#BCBD22","#17BECF"] },
+                    { name: "Classic Gray 5", en: "Classic Gray 5", colors: ["#000000","#808080","#C0C0C0","#D3D3D3","#FFFFFF"] },
+                    { name: "Classic Color Blind", en: "Classic Color Blind", colors: ["#1170AA","#DC4405","#E73F5C","#2E91E5","#55A868","#F1C232","#CDA429","#B9AA98","#705770","#466B9F"] },
+                    { name: "Classic Traffic Light", en: "Classic Traffic Light", colors: ["#008000","#FFFF00","#FF0000"] },
+                    { name: "Classic Purple-Gray 6", en: "Classic Purple-Gray 6", colors: ["#6A1A4A","#BDBDBD"] },
+                    { name: "Classic Green-Orange 6", en: "Classic Green-Orange 6", colors: ["#1B9E77","#D95F02"] },
+                    { name: "Classic Blue-Red 6", en: "Classic Blue-Red 6", colors: ["#7570B3","#E7298A"] },
+                    { name: "Classic Cyclic", en: "Classic Cyclic", colors: ["#E7298A","#E6AB02","#A6761D","#666666","#1B9E77","#D95F02","#7570B3"] }
                 ]
             },
             {
-                type: "Ordered-Sequential",
+                type: "Ordered-Sequential / 順序 (連続)",
                 source: "Tableau",
                 palettes: [
-                    { name: "Blue-Green Sequential", colors: ["#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#41AB5D", "#238B45", "#005A32"] },
-                    { name: "Blue Light", colors: ["#EFF3FF", "#BDD7E7", "#6BAED6", "#3182BD", "#08519C"] },
-                    { name: "Orange Light", colors: ["#FFF7EC", "#FEE8C8", "#FDD49E", "#FDBB84", "#FC8D59", "#EF6548", "#D7301F"] },
-                    { name: "Blue", colors: ["#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5", "#08519C"] },
-                    { name: "Orange", colors: ["#FEF0D9", "#FDCC8A", "#FC8D59", "#E34A33", "#B30000"] },
-                    { name: "Green", colors: ["#F7FCF5", "#E5F5E0", "#C7E9C0", "#A1D99B", "#41AB5D", "#238B45", "#005A32"] },
-                    { name: "Red", colors: ["#FFF5F0", "#FEE0D2", "#FCBBA1", "#FC9272", "#FB6A4A", "#EF3B2C", "#CB181D", "#A50F15", "#67000D"] },
-                    { name: "Purple", colors: ["#FCFBFD", "#EFEDF5", "#DADAEB", "#BCBDDC", "#9E9AC8", "#807DBA", "#6A51A3", "#54278F", "#3F007D"] },
-                    { name: "Brown", colors: ["#F7F7F7", "#D9D9D9", "#BDBDBD", "#969696", "#636363", "#252525"] },
-                    { name: "Gray", colors: ["#F7F7F7", "#D9D9D9", "#BDBDBD", "#969696", "#636363", "#252525"] },
-                    { name: "Gray Warm", colors: ["#F7F7F7", "#D1D1D1", "#A9A9A9", "#7D7D7D", "#5C5C5C", "#3B3B3B"] },
-                    { name: "Blue-Teal", colors: ["#F0F9E8", "#CCEBC5", "#A8DDB5", "#7BDEB6", "#4DAB80", "#2A9A5E", "#006D36"] },
-                    { name: "Orange-Gold", colors: ["#FFF5E1", "#F7EAB5", "#F0D9A6", "#E1C699", "#CDB481", "#B8946E", "#A27D4F"] },
-                    { name: "Green-Gold", colors: ["#F0F9E8", "#CCEBC5", "#A8DDB5", "#7BDEB6", "#4DAB80", "#2A9A5E", "#006D36"] },
-                    { name: "Red-Gold", colors: ["#FFF5F0", "#FEE0D2", "#FCBBA1", "#FC9272", "#FB6A4A", "#EF3B2C", "#CB181D"] },
-                    { name: "Classic Green", colors: ["#F0F9E8", "#CCEBC5", "#A8DDB5", "#7BDEB6", "#4DAB80", "#2A9A5E", "#006D36"] },
-                    { name: "Classic Gray", colors: ["#F7F7F7", "#D9D9D9", "#BDBDBD", "#969696", "#636363", "#252525"] },
-                    { name: "Classic Blue", colors: ["#DEEBF7", "#C6DBEF", "#9ECAE1", "#6BAED6", "#4292C6", "#2171B5", "#08519C"] },
-                    { name: "Classic Red", colors: ["#FFF5F0", "#FEE0D2", "#FCBBA1", "#FC9272", "#FB6A4A", "#EF3B2C", "#A50000"] },
-                    { name: "Classic Orange", colors: ["#FEF0D9", "#FDCC8A", "#FC8D59", "#E34A33", "#B30000"] },
-                    { name: "Classic Area Red", colors: ["#E5E5E5", "#F7BAAB", "#F68A7A", "#F45A4A", "#D73027"] },
-                    { name: "Classic Area Green", colors: ["#E5E5E5", "#C7E9C0", "#A1D99B", "#41AB5D", "#005A32"] },
-                    { name: "Classic Area-Brown", colors: ["#E5E5E5", "#F0D9A6", "#E1C699", "#CDB481", "#A27D4F"] }
+                    { name: "Blue-Green Sequential", en: "Blue-Green Sequential", colors: ["#F7FCF5","#E5F5E0","#C7E9C0","#A1D99B","#41AB5D","#238B45","#005A32"] },
+                    { name: "Blue Light", en: "Blue Light", colors: ["#EFF3FF","#BDD7E7","#6BAED6","#3182BD","#08519C"] },
+                    { name: "Orange Light", en: "Orange Light", colors: ["#FFF7EC","#FEE8C8","#FDD49E","#FDBB84","#FC8D59","#EF6548","#D7301F"] },
+                    { name: "Blue", en: "Blue", colors: ["#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C"] },
+                    { name: "Orange", en: "Orange", colors: ["#FEF0D9","#FDCC8A","#FC8D59","#E34A33","#B30000"] },
+                    { name: "Green", en: "Green", colors: ["#F7FCF5","#E5F5E0","#C7E9C0","#A1D99B","#41AB5D","#238B45","#005A32"] },
+                    { name: "Red", en: "Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D","#A50F15","#67000D"] },
+                    { name: "Purple", en: "Purple", colors: ["#FCFBFD","#EFEDF5","#DADAEB","#BCBDDC","#9E9AC8","#807DBA","#6A51A3","#54278F","#3F007D"] },
+                    { name: "Brown", en: "Brown", colors: ["#F7F7F7","#D9D9D9","#BDBDBD","#969696","#636363","#252525"] },
+                    { name: "Gray", en: "Gray", colors: ["#F7F7F7","#D9D9D9","#BDBDBD","#969696","#636363","#252525"] },
+                    { name: "Gray Warm", en: "Gray Warm", colors: ["#F7F7F7","#D1D1D1","#A9A9A9","#7D7D7D","#5C5C5C","#3B3B3B"] },
+                    { name: "Blue-Teal", en: "Blue-Teal", colors: ["#F0F9E8","#CCEBC5","#A8DDB5","#7BDEB6","#4DAB80","#2A9A5E","#006D36"] },
+                    { name: "Orange-Gold", en: "Orange-Gold", colors: ["#FFF5E1","#F7EAB5","#F0D9A6","#E1C699","#CDB481","#B8946E","#A27D4F"] },
+                    { name: "Green-Gold", en: "Green-Gold", colors: ["#F0F9E8","#CCEBC5","#A8DDB5","#7BDEB6","#4DAB80","#2A9A5E","#006D36"] },
+                    { name: "Red-Gold", en: "Red-Gold", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D"] },
+                    { name: "Classic Green", en: "Classic Green", colors: ["#F0F9E8","#CCEBC5","#A8DDB5","#7BDEB6","#4DAB80","#2A9A5E","#006D36"] },
+                    { name: "Classic Gray", en: "Classic Gray", colors: ["#F7F7F7","#D9D9D9","#BDBDBD","#969696","#636363","#252525"] },
+                    { name: "Classic Blue", en: "Classic Blue", colors: ["#DEEBF7","#C6DBEF","#9ECAE1","#6BAED6","#4292C6","#2171B5","#08519C"] },
+                    { name: "Classic Red", en: "Classic Red", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#A50000"] },
+                    { name: "Classic Orange", en: "Classic Orange", colors: ["#FEF0D9","#FDCC8A","#FC8D59","#E34A33","#B30000"] },
+                    { name: "Classic Area Red", en: "Classic Area Red", colors: ["#E5E5E5","#F7BAAB","#F68A7A","#F45A4A","#D73027"] },
+                    { name: "Classic Area Green", en: "Classic Area Green", colors: ["#E5E5E5","#C7E9C0","#A1D99B","#41AB5D","#005A32"] },
+                    { name: "Classic Area-Brown", en: "Classic Area-Brown", colors: ["#E5E5E5","#F0D9A6","#E1C699","#CDB481","#A27D4F"] }
                 ]
             },
             {
-                type: "Ordered-Diverging",
+                type: "Ordered-Diverging / 発散 (連続)",
                 source: "Tableau",
                 palettes: [
-                    { name: "Orange-Blue Diverging", colors: ["#F46D43", "#F7F7F7", "#2F4B7C"] },
-                    { name: "Red-Green Diverging", colors: ["#D73027", "#F7F7F7", "#1A9850"] },
-                    { name: "Green-Blue Diverging", colors: ["#006D36", "#F7F7F7", "#08519C"] },
-                    { name: "Red-Blue Diverging", colors: ["#DE2D26", "#F7F7F7", "#313695"] },
-                    { name: "Red-Black Diverging", colors: ["#DE2D26", "#000000", "#313695"] },
-                    { name: "Gold-Purple Diverging", colors: ["#E6AB02", "#F7F7F7", "#A6761D"] },
-                    { name: "Red-Green-Gold Diverging", colors: ["#D62728", "#F7F7F7", "#E6AB02"] },
-                    { name: "Sunset-Sunrise Diverging", colors: ["#E7298A", "#F7F7F7", "#1B9E77"] },
-                    { name: "Orange-Blue-White Diverging", colors: ["#F46D43", "#FFFFFF", "#2F4B7C"] },
-                    { name: "Red-Green-White Diverging", colors: ["#D73027", "#FFFFFF", "#1A9850"] },
-                    { name: "Green-Blue-White Diverging", colors: ["#006D36", "#FFFFFF", "#08519C"] },
-                    { name: "Red-Blue-White Diverging", colors: ["#DE2D26", "#FFFFFF", "#313695"] },
-                    { name: "Red-Black-White Diverging", colors: ["#DE2D26", "#FFFFFF", "#000000"] },
-                    { name: "Orange-Blue Light Diverging", colors: ["#F46D43", "#F7F7F7", "#2F4B7C"] },
-                    { name: "Temperature Diverging", colors: ["#D53E4F", "#F7F7F7", "#3288BD"] },
-                    { name: "Classic Red-Green", colors: ["#D73027", "#F7F7F7", "#1A9850"] },
-                    { name: "Classic Red-Blue", colors: ["#DE2D26", "#F7F7F7", "#313695"] },
-                    { name: "Classic Red-Black", colors: ["#DE2D26", "#000000", "#313695"] },
-                    { name: "Classic Area Red-Green", colors: ["#D73027", "#F7F7F7", "#1A9850"] },
-                    { name: "Classic Orange-Blue", colors: ["#F46D43", "#F7F7F7", "#2F4B7C"] },
-                    { name: "Classic Green-Blue", colors: ["#1A9850", "#F7F7F7", "#08519C"] },
-                    { name: "Classic Red-White-Green", colors: ["#D73027", "#FFFFFF", "#1A9850"] },
-                    { name: "Classic Red-White-Black", colors: ["#D73027", "#FFFFFF", "#000000"] },
-                    { name: "Classic Orange-White-Blue", colors: ["#F46D43", "#FFFFFF", "#2F4B7C"] },
-                    { name: "Classic Red-White-Black Light", colors: ["#D73027", "#FFFFFF", "#000000"] },
-                    { name: "Classic Orange-White-Blue Light", colors: ["#F46D43", "#FFFFFF", "#2F4B7C"] },
-                    { name: "Classic Red-White-Green Light", colors: ["#D73027", "#FFFFFF", "#1A9850"] },
-                    { name: "Classic Red-Green Light", colors: ["#D73027", "#F7F7F7", "#1A9850"] }
+                    { name: "Orange-Blue Diverging", en: "Orange-Blue Diverging", colors: ["#F46D43","#F7F7F7","#2F4B7C"], diverging: true },
+                    { name: "Red-Green Diverging", en: "Red-Green Diverging", colors: ["#D73027","#F7F7F7","#1A9850"], diverging: true },
+                    { name: "Green-Blue Diverging", en: "Green-Blue Diverging", colors: ["#006D36","#F7F7F7","#08519C"], diverging: true },
+                    { name: "Red-Blue Diverging", en: "Red-Blue Diverging", colors: ["#DE2D26","#F7F7F7","#313695"], diverging: true },
+                    { name: "Red-Black Diverging", en: "Red-Black Diverging", colors: ["#DE2D26","#000000","#313695"], diverging: true },
+                    { name: "Gold-Purple Diverging", en: "Gold-Purple Diverging", colors: ["#E6AB02","#F7F7F7","#A6761D"], diverging: true },
+                    { name: "Red-Green-Gold Diverging", en: "Red-Green-Gold Diverging", colors: ["#D62728","#F7F7F7","#E6AB02"], diverging: true },
+                    { name: "Sunset-Sunrise Diverging", en: "Sunset-Sunrise Diverging", colors: ["#E7298A","#F7F7F7","#1B9E77"], diverging: true },
+                    { name: "Orange-Blue-White Diverging", en: "Orange-Blue-White Diverging", colors: ["#F46D43","#FFFFFF","#2F4B7C"], diverging: true },
+                    { name: "Red-Green-White Diverging", en: "Red-Green-White Diverging", colors: ["#D73027","#FFFFFF","#1A9850"], diverging: true },
+                    { name: "Green-Blue-White Diverging", en: "Green-Blue-White Diverging", colors: ["#006D36","#FFFFFF","#08519C"], diverging: true },
+                    { name: "Red-Blue-White Diverging", en: "Red-Blue-White Diverging", colors: ["#DE2D26","#FFFFFF","#313695"], diverging: true },
+                    { name: "Red-Black-White Diverging", en: "Red-Black-White Diverging", colors: ["#DE2D26","#FFFFFF","#000000"], diverging: true },
+                    { name: "Orange-Blue Light Diverging", en: "Orange-Blue Light Diverging", colors: ["#F46D43","#F7F7F7","#2F4B7C"], diverging: true },
+                    { name: "Temperature Diverging", en: "Temperature Diverging", colors: ["#D53E4F","#F7F7F7","#3288BD"], diverging: true },
+                    { name: "Classic Red-Green", en: "Classic Red-Green", colors: ["#D73027","#F7F7F7","#1A9850"], diverging: true },
+                    { name: "Classic Red-Blue", en: "Classic Red-Blue", colors: ["#DE2D26","#F7F7F7","#313695"], diverging: true },
+                    { name: "Classic Red-Black", en: "Classic Red-Black", colors: ["#DE2D26","#000000","#313695"], diverging: true },
+                    { name: "Classic Area Red-Green", en: "Classic Area Red-Green", colors: ["#D73027","#F7F7F7","#1A9850"], diverging: true },
+                    { name: "Classic Orange-Blue", en: "Classic Orange-Blue", colors: ["#F46D43","#F7F7F7","#2F4B7C"], diverging: true },
+                    { name: "Classic Green-Blue", en: "Classic Green-Blue", colors: ["#1A9850","#F7F7F7","#08519C"], diverging: true },
+                    { name: "Classic Red-White-Green", en: "Classic Red-White-Green", colors: ["#D73027","#FFFFFF","#1A9850"], diverging: true },
+                    { name: "Classic Red-White-Black", en: "Classic Red-White-Black", colors: ["#D73027","#FFFFFF","#000000"], diverging: true },
+                    { name: "Classic Orange-White-Blue", en: "Classic Orange-White-Blue", colors: ["#F46D43","#FFFFFF","#2F4B7C"], diverging: true },
+                    { name: "Classic Red-White-Black Light", en: "Classic Red-White-Black Light", colors: ["#D73027","#FFFFFF","#000000"], diverging: true },
+                    { name: "Classic Orange-White-Blue Light", en: "Classic Orange-White-Blue Light", colors: ["#F46D43","#FFFFFF","#2F4B7C"], diverging: true },
+                    { name: "Classic Red-White-Green Light", en: "Classic Red-White-Green Light", colors: ["#D73027","#FFFFFF","#1A9850"], diverging: true },
+                    { name: "Classic Red-Green Light", en: "Classic Red-Green Light", colors: ["#D73027","#F7F7F7","#1A9850"], diverging: true }
                 ]
             }
         ];
 
-        // 2. Power BI デフォルトパレット
         const powerBiPalettes = [
             {
-                type: "Categorical Palettes (Regular)",
+                type: "Categorical Palettes (Regular) / カテゴリ",
                 source: "Power BI",
                 palettes: [
-                    { name: "Default", colors: ["#01B8AA", "#374649", "#FD625E", "#F2C80F", "#5F6B6D", "#8AD4EB", "#FE9666", "#A66999"] },
-                    { name: "Colorblind Safe", colors: ["#074650", "#009292", "#FE6DB6", "#FEB5DA", "#480091", "#B66DFF", "#B5DAFE", "#6DB6FF"] },
-                    { name: "Electric", colors: ["#118DFF", "#750985", "#C83D95", "#FF985E", "#1DD5EE", "#42F7C0", "#3049AD", "#F64F5C"] },
-                    { name: "High Contrast", colors: ["#107C10", "#002050", "#A80000", "#5C2D91", "#004B50", "#0078D7", "#D83B01", "#B4009E"] }
+                    { name: "Default", en: "Default", colors: ["#01B8AA","#374649","#FD625E","#F2C80F","#5F6B6D","#8AD4EB","#FE9666","#A66999"] },
+                    { name: "Colorblind Safe", en: "Colorblind Safe", colors: ["#074650","#009292","#FE6DB6","#FEB5DA","#480091","#B66DFF","#B5DAFE","#6DB6FF"] },
+                    { name: "Electric", en: "Electric", colors: ["#118DFF","#750985","#C83D95","#FF985E","#1DD5EE","#42F7C0","#3049AD","#F64F5C"] },
+                    { name: "High Contrast", en: "High Contrast", colors: ["#107C10","#002050","#A80000","#5C2D91","#004B50","#0078D7","#D83B01","#B4009E"] }
                 ]
             },
             {
-                type: "Sequential Palettes (Ordered-Sequential)",
+                type: "Sequential Palettes (Ordered-Sequential) / 順序",
                 source: "Power BI",
                 palettes: [
-                    { name: "Temperature", colors: ["#313695", "#4575B4", "#74ADD1", "#ABD9E9", "#E0F3F8", "#FFFFBF", "#FEE090", "#FDAE61", "#F46D43", "#D73027"] },
-                    { name: "Solar", colors: ["#FFFFE5", "#FFF7BC", "#FEE391", "#FEC44F", "#FE9929", "#EC7014", "#CC4C02", "#993404", "#662506"] },
-                    { name: "Sunset", colors: ["#B6B0FF", "#FFBBED", "#FF994E", "#42F9F9", "#FFD86C", "#00B2D9"] }
+                    { name: "Temperature", en: "Temperature", colors: ["#313695","#4575B4","#74ADD1","#ABD9E9","#E0F3F8","#FFFFBF","#FEE090","#FDAE61","#F46D43","#D73027"] },
+                    { name: "Solar", en: "Solar", colors: ["#FFFFE5","#FFF7BC","#FEE391","#FEC44F","#FE9929","#EC7014","#CC4C02","#993404","#662506"] },
+                    { name: "Sunset", en: "Sunset", colors: ["#B6B0FF","#FFBBED","#FF994E","#42F9F9","#FFD86C","#00B2D9"] }
                 ]
             },
             {
-                type: "Diverging Palettes (Ordered-Diverging)",
+                type: "Diverging Palettes (Ordered-Diverging) / 発散",
                 source: "Power BI",
                 palettes: [
-                    { name: "Divergent", colors: ["#D73027", "#F7F7F7", "#1A9850"] },
-                    { name: "Twilight", colors: ["#F17925", "#004753", "#A3D0D4"] }
+                    { name: "Divergent", en: "Divergent", colors: ["#D73027","#F7F7F7","#1A9850"], diverging: true },
+                    { name: "Twilight", en: "Twilight", colors: ["#F17925","#004753","#A3D0D4"], diverging: true }
                 ]
             }
         ];
 
-        // --- JavaScript ロジック ---
+        // --- 色相環生成 ---
+        function generateHueCircle(steps = 10) {
+            const colors = [];
+            for (let i = 0; i < steps; i++) {
+                const hue = (i * 360 / steps) % 360;
+                colors.push(hslToHex(hue, 85, 65));
+            }
+            return colors;
+        }
 
-        /**
-         * 単一のカラーパレットのHTMLカードを生成します。
-         * @param {object} palette - パレットオブジェクト ({name, colors})
-         * @param {string} source - データソース (Tableau or Power BI)
-         * @returns {string} - パレットカードのHTML文字列
-         */
+        function hslToHex(h, s, l) {
+            h /= 360; s /= 100; l /= 100;
+            let r, g, b;
+            if (s === 0) { r = g = b = l; }
+            else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1; if (t > 1) t -= 1;
+                    if (t < 1/6) return p + (q - p) * 6 * t;
+                    if (t < 1/2) return q;
+                    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1/3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1/3);
+            }
+            const toHex = x => ('0' + Math.round(x * 255).toString(16)).slice(-2);
+            return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+        }
+
+        // --- HTML生成 ---
         function createPaletteHtml(palette, source) {
-            const colorChips = palette.colors.map(color => {
-                // 白や非常に薄い色の場合は境界線を追加
-                const borderColor = (color.toUpperCase() === '#FFFFFF' || color.toUpperCase() === '#F7F7F7' || color.toUpperCase() === '#F5F5F5' || color.toUpperCase() === '#FFF7BC') ? 'border border-gray-200' : '';
-                return `<div class="color-chip ${borderColor}" style="background-color: ${color};"></div>`;
-            }).join('');
+            const isDiverging = palette.diverging;
+            const gradientCss = palette.colors.map(c => c).join(', ');
 
-            // クリックイベントで selectPalette 関数を呼び出す
-            const colorListString = JSON.stringify(palette.colors).replace(/"/g, "'");
-            const selectFunctionCall = `selectPalette('${palette.name}', ${colorListString}, '${source}')`;
-            
+            const preview = isDiverging
+                ? `<div class="h-10 w-full gradient-preview" style="--colors: ${gradientCss};"></div>`
+                : `<div class="flex h-10 w-full overflow-hidden">
+                    ${palette.colors.map(c => {
+                        const border = ['#FFFFFF','#F7F7F7','#F5F5F5','#FFF7BC'].includes(c.toUpperCase()) ? 'border border-gray-200' : '';
+                        return `<div class="color-chip ${border}" style="background-color:${c};"></div>`;
+                    }).join('')}
+                  </div>`;
+
+            const colorStr = JSON.stringify(palette.colors).replace(/"/g, "'");
+            const selectCall = `selectPalette('${palette.name}', ${colorStr}, '${source}', '${palette.en}')`;
+
             return `
-                <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out overflow-hidden cursor-pointer" onclick="${selectFunctionCall}">
+                <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out overflow-hidden cursor-pointer" onclick="${selectCall}">
                     <div class="p-4">
-                        <h4 class="text-base font-semibold text-gray-800 mb-2">${palette.name}</h4>
-                        <p class="text-xs text-gray-500 font-medium">${source}</p>
+                        <h4 class="text-base font-semibold text-gray-800 mb-1">${palette.name}</h4>
+                        <p class="text-xs text-gray-500">${palette.en} (${source})</p>
                     </div>
-                    <div class="flex h-10 w-full overflow-hidden">
-                        ${colorChips}
-                    </div>
+                    ${preview}
                 </div>
             `;
         }
 
-        /**
-         * 全てのパレットデータを取得し、メインコンテナに表示します。
-         */
+        function renderPaletteSource(data, name) {
+            let html = `<section><h2 class="text-2xl font-bold border-b-2 border-blue-500 pb-2 mb-6 text-blue-700">${name} パレット / ${name} Palettes</h2>`;
+            data.forEach(g => {
+                html += `<div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-4">${g.type}</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${g.palettes.map(p => createPaletteHtml(p, name)).join('')}
+                    </div>
+                </div>`;
+            });
+            return html + `</section>`;
+        }
+
         function renderPalettes() {
             const container = document.getElementById('palette-main-container');
-            let allHtml = '';
-
-            // Tableau パレットのレンダリング
-            allHtml += renderPaletteSource(tableauDefaultPalettes, 'Tableau');
-            
-            // Power BI パレットのレンダリング
-            allHtml += renderPaletteSource(powerBiPalettes, 'Power BI');
-
-            container.innerHTML = allHtml;
+            container.innerHTML = renderPaletteSource(tableauDefaultPalettes, 'Tableau') + renderPaletteSource(powerBiPalettes, 'Power BI');
         }
 
-        /**
-         * 特定のデータソースのパレット群をレンダリングします。
-         * @param {Array<object>} sourceData - データソースのパレット群
-         * @param {string} sourceName - データソース名
-         * @returns {string} - HTML文字列
-         */
-        function renderPaletteSource(sourceData, sourceName) {
-            let sourceHtml = `
-                <section>
-                    <h2 class="text-2xl font-bold border-b-2 border-blue-500 pb-2 mb-6 text-blue-700">${sourceName} パレット</h2>
-            `;
-            
-            sourceData.forEach(group => {
-                const groupTitle = group.type;
-                const paletteCards = group.palettes
-                    .map(palette => createPaletteHtml(palette, sourceName))
-                    .join('');
-
-                sourceHtml += `
-                    <div class="mb-8">
-                        <h3 class="text-xl font-semibold text-gray-700 mb-4">${groupTitle}</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                            ${paletteCards}
-                        </div>
-                    </div>
-                `;
-            });
-
-            sourceHtml += `</section>`;
-            return sourceHtml;
+        // --- 選択・コピー ---
+        function selectPalette(name, colors, source, en) {
+            document.getElementById('selected-name').textContent = `${name} (${en} - ${source})`;
+            const isDiverging = colors.length <= 3 && colors.some(c => c === '#F7F7F7' || c === '#FFFFFF' || c === '#000000');
+            const preview = isDiverging
+                ? `<div class="h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner" style="background: linear-gradient(to right, ${colors.join(', ')};"></div>`
+                : `<div class="flex h-12 w-full rounded-md overflow-hidden border border-gray-200 shadow-inner">
+                    ${colors.map(c => {
+                        const border = ['#FFFFFF','#F7F7F7','#F5F5F5','#FFF7BC'].includes(c.toUpperCase()) ? 'border border-gray-200' : '';
+                        return `<div class="color-chip relative group ${border}" style="background:${c};" title="${c}">
+                            <span class="hidden sm:block absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">${c}</span>
+                        </div>`;
+                    }).join('')}
+                  </div>`;
+            document.getElementById('selected-colors').innerHTML = preview;
+            const hex = colors.join(', ');
+            const textarea = document.getElementById('selected-hex-codes');
+            textarea.value = hex;
+            textarea.rows = Math.ceil(hex.length / 50) + 1;
+            document.getElementById('selected-palette-container').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const btn = document.getElementById('copy-button');
+            btn.textContent = 'HEXコードをコピー';
+            btn.className = btn.className.replace(/bg-(green|red)-\d+/, 'bg-blue-600').replace(/hover:bg-(green|red)-\d+/, 'hover:bg-blue-700');
         }
 
+        function closeSelected() { document.getElementById('selected-palette-container').classList.add('hidden'); }
 
-        /**
-         * パレットを選択したとき、固定ヘッダーに詳細を表示します。
-         * @param {string} name - パレット名
-         * @param {Array<string>} colors - HEXコードの配列
-         * @param {string} source - データソース
-         */
-        function selectPalette(name, colors, source) {
-            const container = document.getElementById('selected-palette-container');
-            const nameEl = document.getElementById('selected-name');
-            const colorsEl = document.getElementById('selected-colors');
-            const hexCodesEl = document.getElementById('selected-hex-codes');
-
-            // 1. 名前とソースの更新
-            nameEl.textContent = `${name} (${source})`;
-
-            // 2. カラーチップの更新
-            const colorChipsHtml = colors.map(color => {
-                const borderColor = (color.toUpperCase() === '#FFFFFF' || color.toUpperCase() === '#F7F7F7' || color.toUpperCase() === '#F5F5F5' || color.toUpperCase() === '#FFF7BC') ? 'border border-gray-200' : '';
-                // 各カラーチップに色名をツールチップとして表示 (モバイルでは非表示)
-                const tooltipText = `<span class="hidden sm:block absolute bottom-full left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">${color}</span>`;
-                return `
-                    <div class="color-chip relative group ${borderColor}" 
-                         style="background-color: ${color};" 
-                         title="${color}">
-                         ${tooltipText}
-                    </div>
-                `;
-            }).join('');
-            colorsEl.innerHTML = colorChipsHtml;
-
-            // 3. HEXコードの更新
-            const hexCodesString = colors.join(', ');
-            hexCodesEl.value = hexCodesString;
-            hexCodesEl.rows = Math.ceil(hexCodesString.length / 50) + 1; // テキスト量に応じて行数を自動調整
-
-            // 4. 固定ヘッダーの表示
-            container.classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' }); // 画面上部にスクロール
-            
-            // 5. コピーボタンのテキストをリセット
-            const copyButton = document.getElementById('copy-button');
-            copyButton.textContent = 'HEXコードをコピー';
-            copyButton.classList.remove('bg-green-600', 'hover:bg-green-700');
-            copyButton.classList.add('bg-blue-600', 'hover:bg-blue-700');
-        }
-
-        /**
-         * 選択されたパレットの詳細表示を閉じます。
-         */
-        function closeSelected() {
-            document.getElementById('selected-palette-container').classList.add('hidden');
-        }
-
-        /**
-         * HEXコードをクリップボードにコピーします。
-         */
         function copyToClipboard() {
             const textarea = document.getElementById('selected-hex-codes');
             const button = document.getElementById('copy-button');
-
             try {
-                // テキストエリアを選択し、コピーを実行
                 textarea.select();
                 document.execCommand('copy');
-                
-                // コピー成功時のフィードバック
                 button.textContent = 'コピーしました!';
-                button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-                button.classList.add('bg-green-600', 'hover:bg-green-700');
-
-                // 2秒後にボタンのテキストを元に戻す
+                button.classList.remove('bg-blue-600','hover:bg-blue-700');
+                button.classList.add('bg-green-600','hover:bg-green-700');
                 setTimeout(() => {
                     button.textContent = 'HEXコードをコピー';
-                    button.classList.remove('bg-green-600', 'hover:bg-green-700');
-                    button.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                    button.classList.remove('bg-green-600','hover:bg-green-700');
+                    button.classList.add('bg-blue-600','hover:bg-blue-700');
                 }, 2000);
-
             } catch (err) {
-                // エラー時のメッセージ表示 (開発環境向け)
-                console.error('クリップボードへのコピーに失敗しました:', err);
-                button.textContent = 'コピー失敗 (コンソールを確認)';
-                button.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-                button.classList.add('bg-red-600', 'hover:bg-red-700');
+                console.error(err);
+                button.textContent = 'コピー失敗';
+                button.classList.add('bg-red-600','hover:bg-red-700');
             }
         }
 
-        // --- 初期化 ---
         window.onload = renderPalettes;
     </script>
 </body>
