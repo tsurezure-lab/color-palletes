@@ -74,7 +74,6 @@
         
         const tableauDefaultPalettes = [
             {
-                // 【変更なし】 カテゴリパレットは前回更新したもので確定
                 type: "Regular (Categorical) / 通常 (カテゴリ)",
                 source: "Tableau",
                 palettes: [
@@ -114,14 +113,14 @@
                     // 12色グループ
                     { name: "Green-Orange-Teal", en: "Green-Orange-Teal", colors: ["#4E9F50", "#87D180", "#EF8A0C", "#FCC66D", "#3CA8BC", "#98D9E4", "#94A323", "#C3CE3D", "#A08400", "#F7D42A", "#26897E", "#8DBFA8"] },
                     { name: "Red-Blue-Brown", en: "Red-Blue-Brown", colors: ["#466F9D", "#91B3D7", "#ED444A", "#FEB5A2", "#9D7660", "#D7B5A6", "#3896C4", "#A0D4EE", "#BA7E45", "#39B87F", "#C8133B", "#EA8783"] },
-t                { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#8074A8", "#C6C1F0", "#C46487", "#FFBED1", "#9C9290", "#C5BFBE", "#9B93C9", "#DDB5D5", "#7C7270", "#F498B6", "#B173A0", "#C799BC"] },
+                    // 【変更点】 't' という構文エラーを削除
+                    { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#8074A8", "#C6C1F0", "#C46487", "#FFBED1", "#9C9290", "#C5BFBE", "#9B93C9", "#DDB5D5", "#7C7270", "#F498B6", "#B173A0", "#C799BC"] },
                     // グレー系
                     { name: "Classic Gray 5", en: "Classic Gray 5", colors: ["#60636A", "#A5ACAF", "#414451", "#8F8782", "#CFCFCF"] },
                     { name: "Seattle Grays", en: "Seattle Grays", colors: ["#767F8B", "#B3B7B8", "#5C6068", "#D3D3D3", "#989CA3"] }
                 ]
             },
             {
-                // 【変更点】 順序パレットを、元の3〜7色から、よりリッチな9〜11色の完全なグラデーションコードに更新
                 type: "Ordered-Sequential / 順序 (連続)",
                 source: "Tableau",
                 palettes: [
@@ -136,7 +135,7 @@ t                { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#
                     { name: "Green-Gold", en: "Green-Gold", colors: ["#F7FCF5","#E5F5E0","#C7E9C0","#A1D99B","#74C476","#41AB5D","#238B45","#006D2C","#00441B"] }, // Note: Often same as Green
                     { name: "Red-Gold", en: "Red-Gold", colors: ["#FFF5F0","#FEE0D2","#FCBBA1","#FC9272","#FB6A4A","#EF3B2C","#CB181D","#A50F15","#67000D"] }, // Note: Often same as Red
                     { name: "Orange-Gold", en: "Orange-Gold", colors: ["#FFF5EB","#FEE6CE","#FDD0A2","#FDAE6B","#FD8D3C","#F16913","#D94801","#A63603","#7F2704"] }, // Note: Often same as Orange
-                    { name:g: "Brown", en: "Brown", colors: ["#F7F7F7","#D9D9D9","#BDBDBD","#969696","#737373","#525252","#252525"] }, // Simplified Gray
+                    { name: "Brown", en: "Brown", colors: ["#F7F7F7","#D9D9D9","#BDBDBD","#969696","#737373","#525252","#252525"] }, // Simplified Gray
                     { name: "Gray Warm", en: "Gray Warm", colors: ["#F7F7F7","#D1D1D1","#A9A9A9","#7D7D7D","#5C5C5C","#3B3B3B"] },
                     { name: "Blue Light", en: "Blue Light", colors: ["#EFF3FF","#BDD7E7","#6BAED6","#3182BD","#08519C"] }, // 5-step
                     { name: "Orange Light", en: "Orange Light", colors: ["#FFF7EC","#FEE8C8","#FDD49E","#FDBB84","#FC8D59","#EF6548","#D7301F"] }, // 7-step
@@ -149,7 +148,6 @@ t                { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#
                 ]
             },
             {
-                // 【変更点】 発散パレットを、元の3色のみから、完全な9〜11色のグラデーションコードに更新
                 type: "Ordered-Diverging / 発散 (連続)",
                 source: "Tableau",
                 palettes: [
@@ -193,6 +191,8 @@ t                { name: "Purple-Pink-Gray", en: "Purple-Pink-Gray", colors: ["#
                 palettes: [
                     { name: "Default", en: "Default", colors: ["#01B8AA","#374649","#FD625E","#F2C80F","#5F6B6D","#8AD4EB","#FE9666","#A66999"] },
                     { name: "Colorblind Safe", en: "Colorblind Safe", colors: ["#074650","#009292","#FE6DB6","#FEB5DA","#480091","#B66DFF","#B5DAFE","#6DB6FF"] },
+                    { name: "Tidal", en: "Tidal", colors: ["#0099C6", "#31407B", "#FFA400", "#61C8C1", "#A5AA00", "#FF4C00", "#007399", "#232C56", "#BF7B00", "#499691"] },
+                    { name: "Bloom", en: "Bloom", colors: ["#BF003F", "#FF4C00", "#FFA400", "#A5AA00", "#0099C6", "#31407B", "#61C8C1", "#A5AA00", "#FF4C00", "#BF7B00"] },
                     { name: "Electric", en: "Electric", colors: ["#118DFF","#750985","#C83D95","#FF985E","#1DD5EE","#42F7C0","#3049AD","#F64F5C"] },
                     { name: "High Contrast", en: "High Contrast", colors: ["#107C10","#002050","#A80000","#5C2D91","#004B50","#0078D7","#D83B01","#B4009E"] }
                 ]
