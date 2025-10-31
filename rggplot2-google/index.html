@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>R/ggplot2 & Google カラーパレット</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Zen Maru Gothic -->
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { 
+      font-family: 'Zen Maru Gothic', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background-color: rgb(248, 250, 252); /* 少し変更 */
+    }
+    /* 日本語の後に改行して英訳を小さく表示（括弧なし） */
+    .ja-en {
+      display: block;
+    }
+    .ja-en::after {
+      content: attr(data-en);
+      font-size: 0.875em;
+      color: #6b7280;
+      display: block;
+      margin-top: 0.25rem;
+    }
+  </style>
+</head>
+<body class="min-h-screen">
+  <div class="max-w-7xl mx-auto p-6 lg:p-8">
+    <h1 class="text-4xl font-bold text-center text-indigo-800 mb-4 ja-en" data-en="R/ggplot2 & Google Palettes">R/ggplot2 & Google カラーパレット</h1>
+    <p class="text-center text-gray-600 mb-12 ja-en" data-en="A collection of color palettes for R, ggplot2, and Google Material Design">R、ggplot2、Googleマテリアルデザインで使えるカラーパレット集</p>
+
+    <!-- R / ggplot2 関連パレット -->
+    <h2 class="text-2xl font-bold text-indigo-700 mt-12 mb-6 border-b-2 border-indigo-200 pb-2 ja-en" data-en="R / ggplot2 Palettes">R / ggplot2 関連パレット</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      
+      <!-- ggplot2 Default -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #F8766D; flex-grow: 1;"></div><div style="background-color: #A3A500; flex-grow: 1;"></div><div style="background-color: #00BF7D; flex-grow: 1;"></div><div style="background-color: #00B0F6; flex-grow: 1;"></div><div style="background-color: #E76BF3; flex-grow: 1;"></div><div style="background-color: #FF61C3; flex-grow: 1;"></div><div style="background-color: #00C19F; flex-grow: 1;"></div><div style="background-color: #C49A00; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Default Colors (ggplot2)">Default Colors (ggplot2)</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="8 Colors / Categorical">8色 / カテゴリカル</p>
+      </div>
+      
+      <!-- Set1 -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #E41A1C; flex-grow: 1;"></div><div style="background-color: #377EB8; flex-grow: 1;"></div><div style="background-color: #4DAF4A; flex-grow: 1;"></div><div style="background-color: #984EA3; flex-grow: 1;"></div><div style="background-color: #FF7F00; flex-grow: 1;"></div><div style="background-color: #FFFF33; flex-grow: 1;"></div><div style="background-color: #A65628; flex-grow: 1;"></div><div style="background-color: #F781BF; flex-grow: 1;"></div><div style="background-color: #999999; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Set1 (ColorBrewer)">Set1 (ColorBrewer)</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="9 Colors / Categorical">9色 / カテゴリカル</p>
+      </div>
+
+      <!-- Dark2 -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #1B9E77; flex-grow: 1;"></div><div style="background-color: #D95F02; flex-grow: 1;"></div><div style="background-color: #7570B3; flex-grow: 1;"></div><div style="background-color: #E7298A; flex-grow: 1;"></div><div style="background-color: #66A61E; flex-grow: 1;"></div><div style="background-color: #E6AB02; flex-grow: 1;"></div><div style="background-color: #A6761D; flex-grow: 1;"></div><div style="background-color: #666666; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Dark2 (ColorBrewer)">Dark2 (ColorBrewer)</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="8 Colors / Categorical">8色 / カテゴリカル</p>
+      </div>
+      
+      <!-- Paired -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #A6CEE3; flex-grow: 1;"></div><div style="background-color: #1F78B4; flex-grow: 1;"></div><div style="background-color: #B2DF8A; flex-grow: 1;"></div><div style="background-color: #33A02C; flex-grow: 1;"></div><div style="background-color: #FB9A99; flex-grow: 1;"></div><div style="background-color: #E31A1C; flex-grow: 1;"></div><div style="background-color: #FDBF6F; flex-grow: 1;"></div><div style="background-color: #FF7F00; flex-grow: 1;"></div><div style="background-color: #CAB2D6; flex-grow: 1;"></div><div style="background-color: #6A3D9A; flex-grow: 1;"></div><div style="background-color: #FFFF99; flex-grow: 1;"></div><div style="background-color: #B15928; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Paired (ColorBrewer)">Paired (ColorBrewer)</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="12 Colors / Categorical">12色 / カテゴリカル</p>
+      </div>
+      
+      <!-- Viridis -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #440154; flex-grow: 1;"></div><div style="background-color: #481567; flex-grow: 1;"></div><div style="background-color: #482677; flex-grow: 1;"></div><div style="background-color: #453781; flex-grow: 1;"></div><div style="background-color: #404788; flex-grow: 1;"></div><div style="background-color: #39568c; flex-grow: 1;"></div><div style="background-color: #33638d; flex-grow: 1;"></div><div style="background-color: #2d708e; flex-grow: 1;"></div><div style="background-color: #287d8e; flex-grow: 1;"></div><div style="background-color: #238a8d; flex-grow: 1;"></div><div style="background-color: #1f968b; flex-grow: 1;"></div><div style="background-color: #20a387; flex-grow: 1;"></div><div style="background-color: #29af7f; flex-grow: 1;"></div><div style="background-color: #3cbb75; flex-grow: 1;"></div><div style="background-color: #55c667; flex-grow: 1;"></div><div style="background-color: #73d055; flex-grow: 1;"></div><div style="background-color: #95d840; flex-grow: 1;"></div><div style="background-color: #b8de29; flex-grow: 1;"></div><div style="background-color: #dce319; flex-grow: 1;"></div><div style="background-color: #fde725; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Viridis">Viridis</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Sequential">20色 / シーケンシャル</p>
+      </div>
+
+      <!-- Magma -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #000005; flex-grow: 1;"></div><div style="background-color: #080616; flex-grow: 1;"></div><div style="background-color: #110b2d; flex-grow: 1;"></div><div style="background-color: #1e0848; flex-grow: 1;"></div><div style="background-color: #300060; flex-grow: 1;"></div><div style="background-color: #43006a; flex-grow: 1;"></div><div style="background-color: #57096e; flex-grow: 1;"></div><div style="background-color: #6b116f; flex-grow: 1;"></div><div style="background-color: #81176d; flex-grow: 1;"></div><div style="background-color: #981d69; flex-grow: 1;"></div><div style="background-color: #b02363; flex-grow: 1;"></div><div style="background-color: #c92d59; flex-grow: 1;"></div><div style="background-color: #e03b50; flex-grow: 1;"></div><div style="background-color: #ed504a; flex-grow: 1;"></div><div style="background-color: #f66b4d; flex-grow: 1;"></div><div style="background-color: #fa8657; flex-grow: 1;"></div><div style="background-color: #fba368; flex-grow: 1;"></div><div style="background-color: #fbc17d; flex-grow: 1;"></div><div style="background-color: #fcdf96; flex-grow: 1;"></div><div style="background-color: #fcffb2; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Magma">Magma</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Sequential">20色 / シーケンシャル</p>
+      </div>
+
+      <!-- Plasma -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #0e0888; flex-grow: 1;"></div><div style="background-color: #2d0694; flex-grow: 1;"></div><div style="background-color: #44049e; flex-grow: 1;"></div><div style="background-color: #5900a4; flex-grow: 1;"></div><div style="background-color: #6f01a8; flex-grow: 1;"></div><div style="background-color: #8405a7; flex-grow: 1;"></div><div style="background-color: #9511a2; flex-grow: 1;"></div><div style="background-color: #a72196; flex-grow: 1;"></div><div style="background-color: #b5308a; flex-grow: 1;"></div><div style="background-color: #c5407d; flex-grow: 1;"></div><div style="background-color: #d14e73; flex-grow: 1;"></div><div style="background-color: #dc5d66; flex-grow: 1;"></div><div style="background-color: #e76e5b; flex-grow: 1;"></div><div style="background-color: #ef7e4e; flex-grow: 1;"></div><div style="background-color: #f79044; flex-grow: 1;"></div><div style="background-color: #fba138; flex-grow: 1;"></div><div style="background-color: #feb72c; flex-grow: 1;"></div><div style="background-color: #fdcc26; flex-grow: 1;"></div><div style="background-color: #f7e226; flex-grow: 1;"></div><div style="background-color: #f0f921; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Plasma">Plasma</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Sequential">20色 / シーケンシャル</p>
+      </div>
+
+      <!-- Turbo -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #30123b; flex-grow: 1;"></div><div style="background-color: #4771e9; flex-grow: 1;"></div><div style="background-color: #4682f8; flex-grow: 1;"></div><div style="background-color: #3aa3fc; flex-grow: 1;"></div><div style="background-color: #2cb7f0; flex-grow: 1;"></div><div style="background-color: #1ad2d2; flex-grow: 1;"></div><div style="background-color: #18e0bd; flex-grow: 1;"></div><div style="background-color: #3cf58e; flex-grow: 1;"></div><div style="background-color: #92ff47; flex-grow: 1;"></div><div style="background-color: #c1f334; flex-grow: 1;"></div><div style="background-color: #e1dd37; flex-grow: 1;"></div><div style="background-color: #f6c13a; flex-grow: 1;"></div><div style="background-color: #fe9b2d; flex-grow: 1;"></div><div style="background-color: #f9751d; flex-grow: 1;"></div><div style="background-color: #ed500e; flex-grow: 1;"></div><div style="background-color: #cc2b04; flex-grow: 1;"></div><div style="background-color: #a11201; flex-grow: 1;"></div><div style="background-color: #7a0403; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Turbo">Turbo</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="Many Colors / Diverging">多色 / 分岐</p>
+      </div>
+    </div>
+    
+    <!-- Google Material Design -->
+    <h2 class="text-2xl font-bold text-teal-700 mt-16 mb-6 border-b-2 border-teal-200 pb-2 ja-en" data-en="Google Material Design Palettes">Google Material Design パレット</h2>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+
+      <!-- Material Design Red -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #FFEBEE; flex-grow: 1;"></div><div style="background-color: #FFCDD2; flex-grow: 1;"></div><div style="background-color: #EF9A9A; flex-grow: 1;"></div><div style="background-color: #E57373; flex-grow: 1;"></div><div style="background-color: #EF5350; flex-grow: 1;"></div><div style="background-color: #F44336; flex-grow: 1;"></div><div style="background-color: #E53935; flex-grow: 1;"></div><div style="background-color: #D32F2F; flex-grow: 1;"></div><div style="background-color: #C62828; flex-grow: 1;"></div><div style="background-color: #B71C1C; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Red">Material Design Red</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Pink -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #FCE4EC; flex-grow: 1;"></div><div style="background-color: #F8BBD0; flex-grow: 1;"></div><div style="background-color: #F48FB1; flex-grow: 1;"></div><div style="background-color: #F06292; flex-grow: 1;"></div><div style="background-color: #EC407A; flex-grow: 1;"></div><div style="background-color: #E91E63; flex-grow: 1;"></div><div style="background-color: #D81B60; flex-grow: 1;"></div><div style="background-color: #C2185B; flex-grow: 1;"></div><div style="background-color: #AD1457; flex-grow: 1;"></div><div style="background-color: #880E4F; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Pink">Material Design Pink</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Purple -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #F3E5F5; flex-grow: 1;"></div><div style="background-color: #E1BEE7; flex-grow: 1;"></div><div style="background-color: #CE93D8; flex-grow: 1;"></div><div style="background-color: #BA68C8; flex-grow: 1;"></div><div style="background-color: #AB47BC; flex-grow: 1;"></div><div style="background-color: #9C27B0; flex-grow: 1;"></div><div style="background-color: #8E24AA; flex-grow: 1;"></div><div style="background-color: #7B1FA2; flex-grow: 1;"></div><div style="background-color: #6A1B9A; flex-grow: 1;"></div><div style="background-color: #4A148C; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Purple">Material Design Purple</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Indigo -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #E8EAF6; flex-grow: 1;"></div><div style="background-color: #C5CAE9; flex-grow: 1;"></div><div style="background-color: #9FA8DA; flex-grow: 1;"></div><div style="background-color: #7986CB; flex-grow: 1;"></div><div style="background-color: #5C6BC0; flex-grow: 1;"></div><div style="background-color: #3F51B5; flex-grow: 1;"></div><div style="background-color: #3949AB; flex-grow: 1;"></div><div style="background-color: #303F9F; flex-grow: 1;"></div><div style="background-color: #283593; flex-grow: 1;"></div><div style="background-color: #1A237E; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Indigo">Material Design Indigo</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Blue -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #E3F2FD; flex-grow: 1;"></div><div style="background-color: #BBDEFB; flex-grow: 1;"></div><div style="background-color: #90CAF9; flex-grow: 1;"></div><div style="background-color: #64B5F6; flex-grow: 1;"></div><div style="background-color: #42A5F5; flex-grow: 1;"></div><div style="background-color: #2196F3; flex-grow: 1;"></div><div style="background-color: #1E88E5; flex-grow: 1;"></div><div style="background-color: #1976D2; flex-grow: 1;"></div><div style="background-color: #1565C0; flex-grow: 1;"></div><div style="background-color: #0D47A1; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Blue">Material Design Blue</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Teal -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #E0F2F1; flex-grow: 1;"></div><div style="background-color: #B2DFDB; flex-grow: 1;"></div><div style="background-color: #80CBC4; flex-grow: 1;"></div><div style="background-color: #4DB6AC; flex-grow: 1;"></div><div style="background-color: #26A69A; flex-grow: 1;"></div><div style="background-color: #009688; flex-grow: 1;"></div><div style="background-color: #00897B; flex-grow: 1;"></div><div style="background-color: #00796B; flex-grow: 1;"></div><div style="background-color: #00695C; flex-grow: 1;"></div><div style="background-color: #004D40; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Teal">Material Design Teal</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      
+      <!-- Material Design Green -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #E8F5E9; flex-grow: 1;"></div><div style="background-color: #C8E6C9; flex-grow: 1;"></div><div style="background-color: #A5D6A7; flex-grow: 1;"></div><div style="background-color: #81C784; flex-grow: 1;"></div><div style="background-color: #66BB6A; flex-grow: 1;"></div><div style="background-color: #4CAF50; flex-grow: 1;"></div><div style="background-color: #43A047; flex-grow: 1;"></div><div style="background-color: #388E3C; flex-grow: 1;"></div><div style="background-color: #2E7D32; flex-grow: 1;"></div><div style="background-color: #1B5E20; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Green">Material Design Green</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Yellow -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #FFFDE7; flex-grow: 1;"></div><div style="background-color: #FFF9C4; flex-grow: 1;"></div><div style="background-color: #FFF59D; flex-grow: 1;"></div><div style="background-color: #FFF176; flex-grow: 1;"></div><div style="background-color: #FFEE58; flex-grow: 1;"></div><div style="background-color: #FFEB3B; flex-grow: 1;"></div><div style="background-color: #FDD835; flex-grow: 1;"></div><div style="background-color: #FBC02D; flex-grow: 1;"></div><div style="background-color: #F9A825; flex-grow: 1;"></div><div style="background-color: #F57F17; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Yellow">Material Design Yellow</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Orange -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #FFF3E0; flex-grow: 1;"></div><div style="background-color: #FFE0B2; flex-grow: 1;"></div><div style="background-color: #FFCC80; flex-grow: 1;"></div><div style="background-color: #FFB74D; flex-grow: 1;"></div><div style="background-color: #FFA726; flex-grow: 1;"></div><div style="background-color: #FF9800; flex-grow: 1;"></div><div style="background-color: #FB8C00; flex-grow: 1;"></div><div style="background-color: #F57C00; flex-grow: 1;"></div><div style="background-color: #EF6C00; flex-grow: 1;"></div><div style="background-color: #E65100; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Orange">Material Design Orange</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      
+      <!-- Material Design Brown -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #EFEBE9; flex-grow: 1;"></div><div style="background-color: #D7CCC8; flex-grow: 1;"></div><div style="background-color: #BCAAA4; flex-grow: 1;"></div><div style="background-color: #A1887F; flex-grow: 1;"></div><div style="background-color: #8D6E63; flex-grow: 1;"></div><div style="background-color: #795548; flex-grow: 1;"></div><div style="background-color: #6D4C41; flex-grow: 1;"></div><div style="background-color: #5D4037; flex-grow: 1;"></div><div style="background-color: #4E342E; flex-grow: 1;"></div><div style="background-color: #3E2723; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Brown">Material Design Brown</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+
+      <!-- Material Design Grey -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #FAFAFA; flex-grow: 1;"></div><div style="background-color: #F5F5F5; flex-grow: 1;"></div><div style="background-color: #EEEEEE; flex-grow: 1;"></div><div style="background-color: #E0E0E0; flex-grow: 1;"></div><div style="background-color: #BDBDBD; flex-grow: 1;"></div><div style="background-color: #9E9E9E; flex-grow: 1;"></div><div style="background-color: #757575; flex-grow: 1;"></div><div style="background-color: #616161; flex-grow: 1;"></div><div style="background-color: #424242; flex-grow: 1;"></div><div style="background-color: #212121; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Grey">Material Design Grey</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      
+      <!-- Material Design 20 Colors -->
+      <div class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200">
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4"><div style="background-color: #f44336; flex-grow: 1;"></div><div style="background-color: #e81e63; flex-grow: 1;"></div><div style="background-color: #9c27b0; flex-grow: 1;"></div><div style="background-color: #673ab7; flex-grow: 1;"></div><div style="background-color: #3f51b5; flex-grow: 1;"></div><div style="background-color: #2196f3; flex-grow: 1;"></div><div style="background-color: #03a9f4; flex-grow: 1;"></div><div style="background-color: #00bcd4; flex-grow: 1;"></div><div style="background-color: #009688; flex-grow: 1;"></div><div style="background-color: #4caf50; flex-grow: 1;"></div><div style="background-color: #8bc34a; flex-grow: 1;"></div><div style="background-color: #cddc39; flex-grow: 1;"></div><div style="background-color: #ffeb3b; flex-grow: 1;"></div><div style="background-color: #ffc107; flex-grow: 1;"></div><div style="background-color: #ff9800; flex-grow: 1;"></div><div style="background-color: #ff5722; flex-grow: 1;"></div><div style="background-color: #795548; flex-grow: 1;"></div><div style="background-color: #9e9e9e; flex-grow: 1;"></div><div style="background-color: #607d8b; flex-grow: 1;"></div><div style="background-color: #000000; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design (20 Colors)">Material Design (20色)</h3>
+        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Categorical">20色 / カテゴリカル</p>
+      </div>
+    </div>
+
+
+    <footer class="text-center mt-16 text-gray-500 text-sm">
+      Made with tsurezure-lab by <a href="https://github.com/tsurezure-lab" class="underline hover:text-indigo-600">tsurezure-lab</a>
+    </footer>
+  </div>
+</body>
+</html>
