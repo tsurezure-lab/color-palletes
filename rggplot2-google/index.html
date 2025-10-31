@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale-1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>R/ggplot2 & Google カラーパレット</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Zen Maru Gothic -->
@@ -20,11 +20,15 @@
       display: block;
       margin-top: 0.25rem;
     }
-    /* コピーボタンのフィードバック用 */
     .copied-feedback {
       background-color: #16a34a !important; /* Tailwindのgreen-600 */
       color: white !important;
     }
+    /* スクロールバーのスタイル（任意） */
+    #modal-content::-webkit-scrollbar { width: 8px; }
+    #modal-content::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px;}
+    #modal-content::-webkit-scrollbar-thumb { background: #a8a8a8; border-radius: 10px; }
+    #modal-content::-webkit-scrollbar-thumb:hover { background: #888; }
   </style>
 </head>
 <body class="min-h-screen">
@@ -36,76 +40,110 @@
     <h2 class="text-2xl font-bold text-indigo-700 mt-12 mb-6 border-b-2 border-indigo-200 pb-2 ja-en" data-en="R / ggplot2 Palettes">R / ggplot2 関連パレット</h2>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
       
-      <!-- 各カードにJSで使うためのデータ属性を追加 -->
-      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" 
-           data-palette-name="Default Colors (ggplot2)" 
-           data-colors='["#F8766D","#A3A500","#00BF7D","#00B0F6","#E76BF3","#FF61C3","#00C19F","#C49A00"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #F8766D; flex-grow: 1;"></div><div style="background-color: #A3A500; flex-grow: 1;"></div><div style="background-color: #00BF7D; flex-grow: 1;"></div><div style="background-color: #00B0F6; flex-grow: 1;"></div><div style="background-color: #E76BF3; flex-grow: 1;"></div><div style="background-color: #FF61C3; flex-grow: 1;"></div><div style="background-color: #00C19F; flex-grow: 1;"></div><div style="background-color: #C49A00; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Default Colors (ggplot2)">Default Colors (ggplot2)</h3>
+      <!-- ggplot2 Default -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Default Colors (ggplot2)" data-colors='["#F8766D","#A3A500","#00BF7D","#00B0F6","#E76BF3","#FF61C3","#00C19F","#C49A00"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #F8766D; flex-grow: 1;"></div><div style="background-color: #A3A500; flex-grow: 1;"></div><div style="background-color: #00BF7D; flex-grow: 1;"></div><div style="background-color: #00B0F6; flex-grow: 1;"></div><div style="background-color: #E76BF3; flex-grow: 1;"></div><div style="background-color: #FF61C3; flex-grow: 1;"></div><div style="background-color: #00C19F; flex-grow: 1;"></div><div style="background-color: #C49A00; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Default Colors (ggplot2)">Default Colors (ggplot2)</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="8 Colors / Categorical">8色 / カテゴリカル</p>
+      </div>
+      <!-- Set1 -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Set1 (ColorBrewer)" data-colors='["#E41A1C","#377EB8","#4DAF4A","#984EA3","#FF7F00","#FFFF33","#A65628","#F781BF","#999999"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #E41A1C; flex-grow: 1;"></div><div style="background-color: #377EB8; flex-grow: 1;"></div><div style="background-color: #4DAF4A; flex-grow: 1;"></div><div style="background-color: #984EA3; flex-grow: 1;"></div><div style="background-color: #FF7F00; flex-grow: 1;"></div><div style="background-color: #FFFF33; flex-grow: 1;"></div><div style="background-color: #A65628; flex-grow: 1;"></div><div style="background-color: #F781BF; flex-grow: 1;"></div><div style="background-color: #999999; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Set1 (ColorBrewer)">Set1 (ColorBrewer)</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="9 Colors / Categorical">9色 / カテゴリカル</p>
+      </div>
+      <!-- Set2 -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Set2 (ColorBrewer)" data-colors='["#66C2A5","#FC8D62","#8DA0CB","#E78AC3","#A6D854","#FFD92F","#E5C494","#B3B3B3"]'>
+        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #66C2A5; flex-grow: 1;"></div><div style="background-color: #FC8D62; flex-grow: 1;"></div><div style="background-color: #8DA0CB; flex-grow: 1;"></div><div style="background-color: #E78AC3; flex-grow: 1;"></div><div style="background-color: #A6D854; flex-grow: 1;"></div><div style="background-color: #FFD92F; flex-grow: 1;"></div><div style="background-color: #E5C494; flex-grow: 1;"></div><div style="background-color: #B3B3B3; flex-grow: 1;"></div></div>
+        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Set2 (ColorBrewer)">Set2 (ColorBrewer)</h3>
         <p class="text-sm text-gray-600 mt-1 ja-en" data-en="8 Colors / Categorical">8色 / カテゴリカル</p>
       </div>
-      
-      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer"
-           data-palette-name="Set1 (ColorBrewer)"
-           data-colors='["#E41A1C","#377EB8","#4DAF4A","#984EA3","#FF7F00","#FFFF33","#A65628","#F781BF","#999999"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #E41A1C; flex-grow: 1;"></div><div style="background-color: #377EB8; flex-grow: 1;"></div><div style="background-color: #4DAF4A; flex-grow: 1;"></div><div style="background-color: #984EA3; flex-grow: 1;"></div><div style="background-color: #FF7F00; flex-grow: 1;"></div><div style="background-color: #FFFF33; flex-grow: 1;"></div><div style="background-color: #A65628; flex-grow: 1;"></div><div style="background-color: #F781BF; flex-grow: 1;"></div><div style="background-color: #999999; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Set1 (ColorBrewer)">Set1 (ColorBrewer)</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="9 Colors / Categorical">9色 / カテゴリカル</p>
-      </div>
-
-      <!-- ... 他のR/ggplot2カードも同様に data-palette-name と data-colors を追加 ... -->
+      <!-- Dark2 -->
       <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Dark2 (ColorBrewer)" data-colors='["#1B9E77","#D95F02","#7570B3","#E7298A","#66A61E","#E6AB02","#A6761D","#666666"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #1B9E77; flex-grow: 1;"></div><div style="background-color: #D95F02; flex-grow: 1;"></div><div style="background-color: #7570B3; flex-grow: 1;"></div><div style="background-color: #E7298A; flex-grow: 1;"></div><div style="background-color: #66A61E; flex-grow: 1;"></div><div style="background-color: #E6AB02; flex-grow: 1;"></div><div style="background-color: #A6761D; flex-grow: 1;"></div><div style="background-color: #666666; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Dark2 (ColorBrewer)">Dark2 (ColorBrewer)</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="8 Colors / Categorical">8色 / カテゴリカル</p>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #1B9E77; flex-grow: 1;"></div><div style="background-color: #D95F02; flex-grow: 1;"></div><div style="background-color: #7570B3; flex-grow: 1;"></div><div style="background-color: #E7298A; flex-grow: 1;"></div><div style="background-color: #66A61E; flex-grow: 1;"></div><div style="background-color: #E6AB02; flex-grow: 1;"></div><div style="background-color: #A6761D; flex-grow: 1;"></div><div style="background-color: #666666; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Dark2 (ColorBrewer)">Dark2 (ColorBrewer)</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="8 Colors / Categorical">8色 / カテゴリカル</p>
       </div>
-      
+      <!-- Paired -->
       <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Paired (ColorBrewer)" data-colors='["#A6CEE3","#1F78B4","#B2DF8A","#33A02C","#FB9A99","#E31A1C","#FDBF6F","#FF7F00","#CAB2D6","#6A3D9A","#FFFF99","#B15928"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #A6CEE3; flex-grow: 1;"></div><div style="background-color: #1F78B4; flex-grow: 1;"></div><div style="background-color: #B2DF8A; flex-grow: 1;"></div><div style="background-color: #33A02C; flex-grow: 1;"></div><div style="background-color: #FB9A99; flex-grow: 1;"></div><div style="background-color: #E31A1C; flex-grow: 1;"></div><div style="background-color: #FDBF6F; flex-grow: 1;"></div><div style="background-color: #FF7F00; flex-grow: 1;"></div><div style="background-color: #CAB2D6; flex-grow: 1;"></div><div style="background-color: #6A3D9A; flex-grow: 1;"></div><div style="background-color: #FFFF99; flex-grow: 1;"></div><div style="background-color: #B15928; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Paired (ColorBrewer)">Paired (ColorBrewer)</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="12 Colors / Categorical">12色 / カテゴリカル</p>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #A6CEE3; flex-grow: 1;"></div><div style="background-color: #1F78B4; flex-grow: 1;"></div><div style="background-color: #B2DF8A; flex-grow: 1;"></div><div style="background-color: #33A02C; flex-grow: 1;"></div><div style="background-color: #FB9A99; flex-grow: 1;"></div><div style="background-color: #E31A1C; flex-grow: 1;"></div><div style="background-color: #FDBF6F; flex-grow: 1;"></div><div style="background-color: #FF7F00; flex-grow: 1;"></div><div style="background-color: #CAB2D6; flex-grow: 1;"></div><div style="background-color: #6A3D9A; flex-grow: 1;"></div><div style="background-color: #FFFF99; flex-grow: 1;"></div><div style="background-color: #B15928; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Paired (ColorBrewer)">Paired (ColorBrewer)</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="12 Colors / Categorical">12色 / カテゴリカル</p>
+      </div>
+      <!-- Viridis -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Viridis" data-colors='["#440154","#481567","#482677","#453781","#404788","#39568c","#33638d","#2d708e","#287d8e","#238a8d","#1f968b","#20a387","#29af7f","#3cbb75","#55c667","#73d055","#95d840","#b8de29","#dce319","#fde725"]'>
+          <div class="bg-gradient-to-r from-[#440154] via-[#21908d] to-[#fde725] h-20 rounded-lg mb-4 pointer-events-none"></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Viridis">Viridis</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Sequential">20色 / シーケンシャル</p>
+      </div>
+      <!-- Magma -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Magma" data-colors='["#000005","#080616","#110b2d","#1e0848","#300060","#43006a","#57096e","#6b116f","#81176d","#981d69","#b02363","#c92d59","#e03b50","#ed504a","#f66b4d","#fa8657","#fba368","#fbc17d","#fcdf96","#fcffb2"]'>
+          <div class="bg-gradient-to-r from-[#000005] via-[#981d69] to-[#fcffb2] h-20 rounded-lg mb-4 pointer-events-none"></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Magma">Magma</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Sequential">20色 / シーケンシャル</p>
+      </div>
+      <!-- Plasma -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Plasma" data-colors='["#0e0888","#2d0694","#44049e","#5900a4","#6f01a8","#8405a7","#9511a2","#a72196","#b5308a","#c5407d","#d14e73","#dc5d66","#e76e5b","#ef7e4e","#f79044","#fba138","#feb72c","#fdcc26","#f7e226","#f0f921"]'>
+          <div class="bg-gradient-to-r from-[#0e0888] via-[#c5407d] to-[#f0f921] h-20 rounded-lg mb-4 pointer-events-none"></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Plasma">Plasma</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Sequential">20色 / シーケンシャル</p>
       </div>
       
-      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Viridis" data-colors='["#440154","#481567","#482677","#453781","#404788","#39568c","#33638d","#2d708e","#287d8e","#238a8d","#1f968b","#20a387","#29af7f","#3cbb75","#55c667","#73d055","#95d840","#b8de29","#dce319","#fde725"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #440154; flex-grow: 1;"></div><div style="background-color: #3cbb75; flex-grow: 1;"></div><div style="background-color: #fde725; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Viridis">Viridis</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Sequential">20色 / シーケンシャル</p>
-      </div>
-
     </div>
     
     <!-- Google Material Design -->
     <h2 class="text-2xl font-bold text-teal-700 mt-16 mb-6 border-b-2 border-teal-200 pb-2 ja-en" data-en="Google Material Design Palettes">Google Material Design パレット</h2>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-
-      <!-- 各カードにJSで使うためのデータ属性を追加 -->
-      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" 
-           data-palette-name="Material Design Red" 
-           data-colors='["#FFEBEE","#FFCDD2","#EF9A9A","#E57373","#EF5350","#F44336","#E53935","#D32F2F","#C62828","#B71C1C"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #FFEBEE; flex-grow: 1;"></div><div style="background-color: #FFCDD2; flex-grow: 1;"></div><div style="background-color: #EF9A9A; flex-grow: 1;"></div><div style="background-color: #E57373; flex-grow: 1;"></div><div style="background-color: #EF5350; flex-grow: 1;"></div><div style="background-color: #F44336; flex-grow: 1;"></div><div style="background-color: #E53935; flex-grow: 1;"></div><div style="background-color: #D32F2F; flex-grow: 1;"></div><div style="background-color: #C62828; flex-grow: 1;"></div><div style="background-color: #B71C1C; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Red">Material Design Red</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      
+      <!-- Material Design Red -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Red" data-colors='["#FFEBEE","#FFCDD2","#EF9A9A","#E57373","#EF5350","#F44336","#E53935","#D32F2F","#C62828","#B71C1C"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #FFEBEE; flex-grow: 1;"></div><div style="background-color: #FFCDD2; flex-grow: 1;"></div><div style="background-color: #EF9A9A; flex-grow: 1;"></div><div style="background-color: #E57373; flex-grow: 1;"></div><div style="background-color: #EF5350; flex-grow: 1;"></div><div style="background-color: #F44336; flex-grow: 1;"></div><div style="background-color: #E53935; flex-grow: 1;"></div><div style="background-color: #D32F2F; flex-grow: 1;"></div><div style="background-color: #C62828; flex-grow: 1;"></div><div style="background-color: #B71C1C; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Red">Material Design Red</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
       </div>
-
-      <!-- ... 他のGoogleカードも同様に data-palette-name と data-colors を追加 ... -->
+      <!-- Material Design Pink -->
       <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Pink" data-colors='["#FCE4EC","#F8BBD0","#F48FB1","#F06292","#EC407A","#E91E63","#D81B60","#C2185B","#AD1457","#880E4F"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #FCE4EC; flex-grow: 1;"></div><div style="background-color: #F48FB1; flex-grow: 1;"></div><div style="background-color: #E91E63; flex-grow: 1;"></div><div style="background-color: #C2185B; flex-grow: 1;"></div><div style="background-color: #880E4F; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Pink">Material Design Pink</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #FCE4EC; flex-grow: 1;"></div><div style="background-color: #F8BBD0; flex-grow: 1;"></div><div style="background-color: #F48FB1; flex-grow: 1;"></div><div style="background-color: #F06292; flex-grow: 1;"></div><div style="background-color: #EC407A; flex-grow: 1;"></div><div style="background-color: #E91E63; flex-grow: 1;"></div><div style="background-color: #D81B60; flex-grow: 1;"></div><div style="background-color: #C2185B; flex-grow: 1;"></div><div style="background-color: #AD1457; flex-grow: 1;"></div><div style="background-color: #880E4F; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Pink">Material Design Pink</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      <!-- Material Design Purple -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Purple" data-colors='["#F3E5F5","#E1BEE7","#CE93D8","#BA68C8","#AB47BC","#9C27B0","#8E24AA","#7B1FA2","#6A1B9A","#4A148C"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #F3E5F5; flex-grow: 1;"></div><div style="background-color: #E1BEE7; flex-grow: 1;"></div><div style="background-color: #CE93D8; flex-grow: 1;"></div><div style="background-color: #BA68C8; flex-grow: 1;"></div><div style="background-color: #AB47BC; flex-grow: 1;"></div><div style="background-color: #9C27B0; flex-grow: 1;"></div><div style="background-color: #8E24AA; flex-grow: 1;"></div><div style="background-color: #7B1FA2; flex-grow: 1;"></div><div style="background-color: #6A1B9A; flex-grow: 1;"></div><div style="background-color: #4A148C; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Purple">Material Design Purple</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      <!-- Material Design Blue -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Blue" data-colors='["#E3F2FD","#BBDEFB","#90CAF9","#64B5F6","#42A5F5","#2196F3","#1E88E5","#1976D2","#1565C0","#0D47A1"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #E3F2FD; flex-grow: 1;"></div><div style="background-color: #BBDEFB; flex-grow: 1;"></div><div style="background-color: #90CAF9; flex-grow: 1;"></div><div style="background-color: #64B5F6; flex-grow: 1;"></div><div style="background-color: #42A5F5; flex-grow: 1;"></div><div style="background-color: #2196F3; flex-grow: 1;"></div><div style="background-color: #1E88E5; flex-grow: 1;"></div><div style="background-color: #1976D2; flex-grow: 1;"></div><div style="background-color: #1565C0; flex-grow: 1;"></div><div style="background-color: #0D47A1; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Blue">Material Design Blue</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      <!-- Material Design Teal -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Teal" data-colors='["#E0F2F1","#B2DFDB","#80CBC4","#4DB6AC","#26A69A","#009688","#00897B","#00796B","#00695C","#004D40"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #E0F2F1; flex-grow: 1;"></div><div style="background-color: #B2DFDB; flex-grow: 1;"></div><div style="background-color: #80CBC4; flex-grow: 1;"></div><div style="background-color: #4DB6AC; flex-grow: 1;"></div><div style="background-color: #26A69A; flex-grow: 1;"></div><div style="background-color: #009688; flex-grow: 1;"></div><div style="background-color: #00897B; flex-grow: 1;"></div><div style="background-color: #00796B; flex-grow: 1;"></div><div style="background-color: #00695C; flex-grow: 1;"></div><div style="background-color: #004D40; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Teal">Material Design Teal</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      <!-- Material Design Green -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Green" data-colors='["#E8F5E9","#C8E6C9","#A5D6A7","#81C784","#66BB6A","#4CAF50","#43A047","#388E3C","#2E7D32","#1B5E20"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #E8F5E9; flex-grow: 1;"></div><div style="background-color: #C8E6C9; flex-grow: 1;"></div><div style="background-color: #A5D6A7; flex-grow: 1;"></div><div style="background-color: #81C784; flex-grow: 1;"></div><div style="background-color: #66BB6A; flex-grow: 1;"></div><div style="background-color: #4CAF50; flex-grow: 1;"></div><div style="background-color: #43A047; flex-grow: 1;"></div><div style="background-color: #388E3C; flex-grow: 1;"></div><div style="background-color: #2E7D32; flex-grow: 1;"></div><div style="background-color: #1B5E20; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Green">Material Design Green</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      <!-- Material Design Yellow -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Yellow" data-colors='["#FFFDE7","#FFF9C4","#FFF59D","#FFF176","#FFEE58","#FFEB3B","#FDD835","#FBC02D","#F9A825","#F57F17"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #FFFDE7; flex-grow: 1;"></div><div style="background-color: #FFF9C4; flex-grow: 1;"></div><div style="background-color: #FFF59D; flex-grow: 1;"></div><div style="background-color: #FFF176; flex-grow: 1;"></div><div style="background-color: #FFEE58; flex-grow: 1;"></div><div style="background-color: #FFEB3B; flex-grow: 1;"></div><div style="background-color: #FDD835; flex-grow: 1;"></div><div style="background-color: #FBC02D; flex-grow: 1;"></div><div style="background-color: #F9A825; flex-grow: 1;"></div><div style="background-color: #F57F17; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Yellow">Material Design Yellow</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
+      </div>
+      <!-- Material Design Orange -->
+      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Orange" data-colors='["#FFF3E0","#FFE0B2","#FFCC80","#FFB74D","#FFA726","#FF9800","#FB8C00","#F57C00","#EF6C00","#E65100"]'>
+          <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #FFF3E0; flex-grow: 1;"></div><div style="background-color: #FFE0B2; flex-grow: 1;"></div><div style="background-color: #FFCC80; flex-grow: 1;"></div><div style="background-color: #FFB74D; flex-grow: 1;"></div><div style="background-color: #FFA726; flex-grow: 1;"></div><div style="background-color: #FF9800; flex-grow: 1;"></div><div style="background-color: #FB8C00; flex-grow: 1;"></div><div style="background-color: #F57C00; flex-grow: 1;"></div><div style="background-color: #EF6C00; flex-grow: 1;"></div><div style="background-color: #E65100; flex-grow: 1;"></div></div>
+          <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Orange">Material Design Orange</h3>
+          <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
       </div>
       
-      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design Blue" data-colors='["#E3F2FD","#BBDEFB","#90CAF9","#64B5F6","#42A5F5","#2196F3","#1E88E5","#1976D2","#1565C0","#0D47A1"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #E3F2FD; flex-grow: 1;"></div><div style="background-color: #90CAF9; flex-grow: 1;"></div><div style="background-color: #2196F3; flex-grow: 1;"></div><div style="background-color: #1976D2; flex-grow: 1;"></div><div style="background-color: #0D47A1; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design Blue">Material Design Blue</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="10 Colors / Sequential">10色 / シーケンシャル</p>
-      </div>
-
-      <div class="palette-card bg-white rounded-xl shadow-lg hover:shadow-2xl transition p-6 border border-gray-200 cursor-pointer" data-palette-name="Material Design (20 Colors)" data-colors='["#f44336","#e81e63","#9c27b0","#673ab7","#3f51b5","#2196f3","#03a9f4","#00bcd4","#009688","#4caf50","#8bc34a","#cddc39","#ffeb3b","#ffc107","#ff9800","#ff5722","#795548","#9e9e9e","#607d8b","#000000"]'>
-        <div class="flex h-20 rounded-lg overflow-hidden mb-4 pointer-events-none"><div style="background-color: #f44336; flex-grow: 1;"></div><div style="background-color: #9c27b0; flex-grow: 1;"></div><div style="background-color: #3f51b5; flex-grow: 1;"></div><div style="background-color: #00bcd4; flex-grow: 1;"></div><div style="background-color: #4caf50; flex-grow: 1;"></div><div style="background-color: #ffeb3b; flex-grow: 1;"></div><div style="background-color: #ff9800; flex-grow: 1;"></div><div style="background-color: #795548; flex-grow: 1;"></div><div style="background-color: #607d8b; flex-grow: 1;"></div></div>
-        <h3 class="text-lg font-semibold text-gray-800 ja-en" data-en="Material Design (20 Colors)">Material Design (20色)</h3>
-        <p class="text-sm text-gray-600 mt-1 ja-en" data-en="20 Colors / Categorical">20色 / カテゴリカル</p>
-      </div>
-
     </div>
 
     <footer class="text-center mt-16 text-gray-500 text-sm">
@@ -114,8 +152,8 @@
   </div>
 
   <!-- モーダルウィンドウのHTML -->
-  <div id="palette-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 hidden z-50">
-    <div id="modal-content" class="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto p-6 relative">
+  <div id="palette-modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center p-4 hidden z-50 transition-opacity duration-300">
+    <div id="modal-content" class="bg-white rounded-xl shadow-2xl w-full max-w-md max-h-[90vh] overflow-y-auto p-6 relative transform scale-95 transition-transform duration-300">
       <!-- コンテンツはJSで動的に挿入 -->
     </div>
   </div>
@@ -126,41 +164,54 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalContent = document.getElementById('modal-content');
   const paletteCards = document.querySelectorAll('.palette-card');
 
-  // モーダルを開く関数
   const openModal = (name, colors) => {
-    // モーダルの中身を生成
+    const allColorsString = colors.join('\n');
     let contentHtml = `
-      <button id="close-modal-btn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-      <h3 class="text-2xl font-bold text-gray-800 mb-6">${name}</h3>
-      <ul class="space-y-3">
+      <button id="close-modal-btn" class="absolute top-3 right-4 text-gray-400 hover:text-gray-800 text-3xl font-light">&times;</button>
+      <h3 class="text-2xl font-bold text-gray-800 mb-6 pr-8">${name}</h3>
+      <ul class="space-y-2 mb-6">
     `;
     
     colors.forEach(color => {
       contentHtml += `
-        <li class="flex items-center justify-between">
-          <div class="flex items-center">
-            <span class="w-6 h-6 rounded-full mr-3 border border-gray-300" style="background-color: ${color};"></span>
-            <code class="text-gray-700 font-mono">${color}</code>
-          </div>
-          <button class="copy-btn text-sm bg-gray-200 hover:bg-indigo-600 hover:text-white text-gray-700 font-semibold py-1 px-3 rounded-lg transition" data-hex="${color}">
-            Copy
-          </button>
+        <li class="flex items-center">
+          <span class="w-6 h-6 rounded-md mr-3 border border-gray-300" style="background-color: ${color};"></span>
+          <code class="text-gray-700 font-mono">${color}</code>
         </li>
       `;
     });
     
-    contentHtml += '</ul>';
+    contentHtml += `
+      </ul>
+      <div class="border-t pt-4">
+        <label for="hex-list" class="block text-sm font-medium text-gray-700 mb-2 ja-en" data-en="Copy all HEX codes">すべてのHEXコードをコピー:</label>
+        <div class="relative">
+          <textarea id="hex-list" readonly class="w-full h-32 p-2 font-mono text-sm bg-gray-100 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500">${allColorsString}</textarea>
+          <button id="copy-all-btn" class="absolute top-2 right-2 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold text-xs py-1 px-3 rounded-lg transition">
+            すべてコピー
+          </button>
+        </div>
+      </div>
+    `;
     modalContent.innerHTML = contentHtml;
     
     modal.classList.remove('hidden');
+    // 開くときのアニメーション
+    setTimeout(() => {
+        modal.classList.remove('opacity-0');
+        modalContent.classList.remove('scale-95');
+    }, 10);
   };
   
-  // モーダルを閉じる関数
   const closeModal = () => {
-    modal.classList.add('hidden');
+    // 閉じるときのアニメーション
+    modal.classList.add('opacity-0');
+    modalContent.classList.add('scale-95');
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 300);
   };
 
-  // 各カードにクリックイベントを追加
   paletteCards.forEach(card => {
     card.addEventListener('click', () => {
       const name = card.dataset.paletteName;
@@ -169,25 +220,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // モーダル内のイベント処理（イベント委任）
   modal.addEventListener('click', (event) => {
-    // 背景クリックでモーダルを閉じる
-    if (event.target === modal) {
+    if (event.target === modal || event.target.id === 'close-modal-btn') {
       closeModal();
     }
-    // 閉じるボタンでモーダルを閉じる
-    if (event.target.id === 'close-modal-btn') {
-      closeModal();
-    }
-    // コピーボタンの処理
-    if (event.target.classList.contains('copy-btn')) {
+    if (event.target.id === 'copy-all-btn') {
       const button = event.target;
-      const hex = button.dataset.hex;
+      const textarea = document.getElementById('hex-list');
       
-      navigator.clipboard.writeText(hex).then(() => {
-        // コピー成功時のフィードバック
+      navigator.clipboard.writeText(textarea.value).then(() => {
         const originalText = button.textContent;
-        button.textContent = 'Copied!';
+        button.textContent = 'コピー完了!';
         button.classList.add('copied-feedback');
         
         setTimeout(() => {
@@ -196,11 +239,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 1500);
       }).catch(err => {
         console.error('Copy failed:', err);
+        button.textContent = '失敗';
       });
     }
   });
 
-  // Escapeキーでモーダルを閉じる
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && !modal.classList.contains('hidden')) {
       closeModal();
